@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3ebdc">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leafy">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Leafy</title>
+<style>
+:root{--bg:#f3ebdc;--card:#fbf6ea;--ink:#2b3a2e;--mut:#7d8a6f;--g:#3f7d58;--g2:#dcebd3;--sand:#e8dcc4;--warn:#d98a2b;--bad:#c45a45;--line:#e4d8bf;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a211b;--card:#232d25;--ink:#ece6d6;--mut:#9aa68c;--g:#6fc28a;--g2:#2c3d2f;--sand:#2f3a30;--warn:#eba44e;--bad:#e07a65;--line:#2f3b31;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1a211b;--card:#232d25;--ink:#ece6d6;--mut:#9aa68c;--g:#6fc28a;--g2:#2c3d2f;--sand:#2f3a30;--warn:#eba44e;--bad:#e07a65;--line:#2f3b31;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,sans-serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+main{max-width:620px;margin:0 auto;padding:14px 16px 120px}
+header{display:flex;align-items:center;justify-content:space-between;margin:8px 0 18px}
+h1{margin:0;font-size:36px;letter-spacing:-1px;font-weight:800}h1 span{display:inline-block;transform:rotate(-12deg)}
+.gear{width:44px;height:44px;border-radius:16px;border:0;background:var(--sand);color:var(--ink);font-size:20px;cursor:pointer}
+.card{display:flex;gap:14px;align-items:center;background:var(--card);border-radius:28px;padding:14px;margin-bottom:14px;box-shadow:0 2px 0 var(--line)}
+.pic{width:78px;height:78px;border-radius:30px 30px 30px 12px;background:var(--g2);flex:none;display:grid;place-items:center;font-size:36px;overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:cover}
+.info{flex:1;min-width:0;cursor:pointer}.info b{display:block;font-size:18px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chips{display:flex;gap:6px;margin:4px 0 8px;flex-wrap:wrap}.chip{background:var(--sand);border-radius:99px;padding:2px 9px;font-size:12px;font-weight:700;color:var(--ink)}
+.bar{height:8px;border-radius:9px;background:var(--sand);overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:var(--g)}
+.bar.soon i{background:var(--warn)}.bar.late i{background:var(--bad)}
+.st{font-size:13px;font-weight:700;margin-top:5px;color:var(--g)}.st.soon{color:var(--warn)}.st.late{color:var(--bad)}
+.drop{width:54px;height:54px;border-radius:50%;border:0;background:var(--g);color:#fff;font-size:24px;cursor:pointer;flex:none;box-shadow:0 4px 0 #0002;transition:transform .1s}.drop:active{transform:translateY(3px) scale(.96);box-shadow:none}
+button{font:inherit;font-weight:800;border:0;border-radius:16px;padding:12px 16px;background:var(--g);color:#fff;cursor:pointer}
+button.soft{background:var(--g2);color:var(--g)}button.del{background:transparent;color:var(--bad)}button:disabled{opacity:.5}
+.fab{position:fixed;right:20px;bottom:calc(44px + env(safe-area-inset-bottom,0px));width:62px;height:62px;border-radius:24px;font-size:32px;padding:0;box-shadow:0 6px 0 #0002,0 12px 24px #0002}
+.empty{text-align:center;color:var(--mut);padding:50px 10px;font-weight:700}.empty b{display:block;font-size:56px}
+footer{position:fixed;left:0;right:0;bottom:0;text-align:center;font-size:11px;color:var(--mut);padding:6px 0 calc(8px + env(safe-area-inset-bottom,0px));pointer-events:none;user-select:none;-webkit-user-select:none}
+footer span{pointer-events:auto;padding:6px 14px;cursor:pointer}
+.ov{position:fixed;inset:0;background:#0006;display:none;align-items:flex-end;justify-content:center;z-index:20}.ov.on{display:flex}
+.sheet{background:var(--bg);width:100%;max-width:620px;max-height:92%;overflow:auto;border-radius:32px 32px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom,0px))}
+.sheet h2{margin:0 0 12px;font-size:24px;font-weight:800}
+label.l{display:block;font-size:12px;font-weight:800;color:var(--mut);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.5px}
+input,select,textarea{width:100%;font:inherit;padding:12px 14px;border-radius:16px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--g)}
+.vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.pick{display:flex;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--g);color:var(--g);border-radius:18px;padding:14px;font-weight:800;cursor:pointer;background:var(--g2)}
+.row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.row>*{flex:1}
+.big{width:130px;height:130px;margin:0 auto 10px;font-size:60px;border-radius:44px 44px 44px 16px}
+.log{font-size:14px;color:var(--mut);max-height:110px;overflow:auto;margin:4px 0 0;padding-left:18px}
+.msg{font-size:13px;color:var(--mut);min-height:18px;margin-top:8px;text-align:center;font-weight:600}
+.wn{align-items:stretch}.wn .sheet{border-radius:0;max-height:100%;height:100%;max-width:none;position:relative;padding-top:calc(64px + env(safe-area-inset-top,0px))}
+.icon{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));width:44px;height:44px;padding:0;display:grid;place-items:center;background:var(--sand);color:var(--ink);border-radius:50%}
+#thm{right:16px}#cls{left:16px}
+.wn h3{margin:18px 0 4px;font-size:16px}.wn ul{margin:4px 0;padding-left:20px;color:var(--mut)}
+</style>
+</head>
+<body>
+<main>
+<header><h1>Leafy <span>🌿</span></h1><button class="gear" id="gear" aria-label="Settings">⚙️</button></header>
+<div id="list"></div>
+</main>
+<button class="fab" id="add" aria-label="Add plant">+</button>
+<footer><span id="ver">v1.1.0</span></footer>
+<div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
+<div class="ov wn" id="wn"><div class="sheet">
+<button class="icon" id="cls" aria-label="Close">✕</button>
+<button class="icon" id="thm" aria-label="Toggle dark or light mode"></button>
+<h2>What’s new</h2>
+<h3>v1.1.0</h3>
+<ul><li>Now an installable app that works offline</li><li>Fresh beige and green look</li><li>Caricatures always work: Claude draws them when an API key is set, otherwise Leafy draws one itself</li></ul>
+<h3>v1.0.0</h3>
+<ul><li>Identify plants from a photo, cartoon profile pictures, watering log and next-watering dates</li></ul>
+</div></div>
+<script>
+const $=s=>document.querySelector(s);
+const SUN=['Low light','Bright indirect','Partial sun','Full sun'];
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let plants=ld('leafy.plants',[]);const save=()=>sv('leafy.plants',plants);
+const pad=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const dn=s=>Math.round(Date.parse(s+'T00:00:00Z')/864e5);
+const fmt=n=>new Date(n*864e5).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'});
+const lastW=p=>p.log.length?p.log[p.log.length-1]:p.added;
+const until=p=>dn(lastW(p))+p.every-dn(today());
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pic=(p,c='pic')=>`<div class="${c}">${p.svg?`<img alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(p.svg)}">`:'🪴'}</div>`;
+
+/* offline caricature: a friendly potted plant, seeded by name */
+function gen(name){let h=0;for(const c of name||'x')h=(h*31+c.charCodeAt(0))>>>0;
+ const r=n=>{h=(h*1103515245+12345)>>>0;return h%n};
+ const bgs=['#dcebd3','#f6e3b8','#f3d6c4','#d6e6e0'],pots=['#d98a5f','#c9704f','#7aa6a0','#e0b34f'],gr=['#3f7d58','#5a9a52','#2f6b4a','#6cae6a'];
+ const n=3+r(3);let L='';
+ for(let i=0;i<n;i++){const a=-55+110*i/(n-1),w=11+r(10),l=34+r(18);L+=`<ellipse cx="100" cy="${118-l}" rx="${w}" ry="${l}" fill="${gr[r(4)]}" transform="rotate(${a} 100 120)"/>`}
+ const pot=pots[r(4)];
+ return`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="${bgs[r(4)]}"/>${L}<path d="M58 120h84l-10 58a10 10 0 0 1-10 8H78a10 10 0 0 1-10-8z" fill="${pot}"/><rect x="52" y="112" width="96" height="18" rx="9" fill="${pot}"/><circle cx="84" cy="150" r="5" fill="#2b3a2e"/><circle cx="116" cy="150" r="5" fill="#2b3a2e"/><circle cx="76" cy="160" r="6" fill="#ff9a8a" opacity=".6"/><circle cx="124" cy="160" r="6" fill="#ff9a8a" opacity=".6"/><path d="M90 160q10 9 20 0" stroke="#2b3a2e" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>`}
+
+function status(p){const u=until(p);
+ if(u<0)return[`Overdue by ${-u} day${u==-1?'':'s'}`,'late'];
+ if(u==0)return['Water today','soon'];
+ return[`Next: ${fmt(dn(today())+u)} · in ${u}d`,u<=1?'soon':''];}
+
+function render(){
+ const el=$('#list');
+ if(!plants.length){el.innerHTML='<div class="empty"><b>🪴</b>No plants yet.<br>Tap + to add your first one.</div>';return}
+ el.innerHTML=[...plants].sort((a,b)=>until(a)-until(b)).map(p=>{const[t,c]=status(p),u=until(p),pc=Math.max(4,Math.min(100,(1-u/p.every)*100));
+  return`<div class="card">${pic(p)}<div class="info" data-id="${p.id}"><b>${esc(p.name)}</b><div class="chips"><span class="chip">☀️ ${esc(p.sun)}</span><span class="chip">💧 ${p.every}d</span></div><div class="bar ${c}"><i style="width:${pc}%"></i></div><div class="st ${c}">${t}</div></div><button class="drop" data-w="${p.id}" aria-label="Water">💧</button></div>`}).join('');
+ el.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{plants.find(x=>x.id==b.dataset.w).log.push(today());save();render()});
+ el.querySelectorAll('.info').forEach(b=>b.onclick=()=>openSheet(plants.find(x=>x.id==b.dataset.id)));
+}
+
+let cur,photo;
+function openSheet(p){
+ photo=null;cur=p?{...p,log:[...p.log]}:{id:Date.now(),name:'',species:'',sun:'Bright indirect',every:7,notes:'',svg:'',added:today(),log:[]};
+ const nw=!p;
+ $('#sheet').innerHTML=`<h2>${nw?'New plant':'Plant details'}</h2><div id="pv">${pic(cur,'pic big')}</div>
+ <label class="pick" for="ph">📷 Add a photo to identify</label><input class="vh" type="file" id="ph" accept="image/*">
+ <div class="row"><button class="soft" id="idb" disabled>🔍 Identify</button><button class="soft" id="drb">🎨 Draw me</button></div><div class="msg" id="msg"></div>
+ <label class="l">Name</label><input id="nm" value="${esc(cur.name)}" placeholder="e.g. Monstera">
+ <label class="l">Sun needs</label><select id="sn">${SUN.map(s=>`<option${s==cur.sun?' selected':''}>${s}</option>`).join('')}</select>
+ <label class="l">Water every (days)</label><input id="ev" type="number" inputmode="numeric" min="1" max="90" value="${cur.every}">
+ <label class="l">Care notes</label><textarea id="nt" rows="2">${esc(cur.notes)}</textarea>
+ ${nw?'':`<label class="l">Watering log</label><ul class="log">${[...cur.log].reverse().map(d=>`<li>${fmt(dn(d))}</li>`).join('')||'<li>Not watered yet</li>'}</ul>`}
+ <div class="row"><button id="sv">Save</button><button class="soft" id="cn">Cancel</button>${nw?'':'<button class="del" id="dl">Delete</button>'}</div>`;
+ $('#ov').classList.add('on');
+ $('#ph').onchange=e=>{photo=e.target.files[0]||null;$('#idb').disabled=!photo;if(photo)say('Photo ready. Tap Identify.')};
+ $('#idb').onclick=identify;$('#drb').onclick=draw;$('#cn').onclick=close;
+ $('#sv').onclick=()=>{cur.name=$('#nm').value.trim()||'Unnamed plant';cur.sun=$('#sn').value;cur.every=Math.max(1,parseInt($('#ev').value)||7);cur.notes=$('#nt').value;
+  if(!cur.svg)cur.svg=gen(cur.name);
+  const i=plants.findIndex(x=>x.id==cur.id);i<0?plants.push(cur):plants[i]=cur;save();close();render()};
+ if(!nw)$('#dl').onclick=()=>{if(confirm('Delete this plant?')){plants=plants.filter(x=>x.id!=cur.id);save();close();render()}};
+}
+const close=()=>$('#ov').classList.remove('on');
+$('#ov').onclick=e=>{if(e.target.id=='ov')close()};
+$('#add').onclick=()=>openSheet();
+const say=t=>{const m=$('#msg');if(m)m.textContent=t};
+
+/* Claude API (user's own key, stored on this device) */
+async function claude(content,max){
+ const key=ld('leafy.key','');if(!key)throw 'nokey';
+ const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-5-5',max_tokens:max,messages:[{role:'user',content}]})});
+ const j=await r.json();if(!r.ok)throw (j.error&&j.error.message)||'API error';
+ return j.content.map(c=>c.text||'').join('')}
+async function b64(f){
+ const bm=await createImageBitmap(f),k=Math.min(1,768/Math.max(bm.width,bm.height)),c=document.createElement('canvas');
+ c.width=bm.width*k;c.height=bm.height*k;c.getContext('2d').drawImage(bm,0,0,c.width,c.height);
+ return c.toDataURL('image/jpeg',.8).split(',')[1]}
+
+async function identify(){
+ if(!photo)return;$('#idb').disabled=true;say('Identifying your plant…');
+ try{
+  const t=await claude([{type:'image',source:{type:'base64',media_type:'image/jpeg',data:await b64(photo)}},{type:'text',text:'Identify the plant in this photo. Reply with ONLY JSON: {"name":"common name","species":"scientific name","sun":"one of: Low light, Bright indirect, Partial sun, Full sun","waterDays":integer typical days between waterings for a home plant,"notes":"one short care tip"}'}],400);
+  const r=JSON.parse(t.match(/\{[\s\S]*\}/)[0]);
+  $('#nm').value=r.name||'';cur.species=r.species||'';if(SUN.includes(r.sun))$('#sn').value=r.sun;
+  if(r.waterDays)$('#ev').value=Math.round(r.waterDays);$('#nt').value=r.notes||'';
+  say('Identified! Drawing its caricature…');await draw();
+ }catch(e){say(e=='nokey'?'Add your Claude API key in ⚙️ Settings to identify from photos. You can still fill details by hand.':'Couldn’t identify that one. Try another photo or enter details by hand.')}
+ $('#idb').disabled=!photo}
+
+async function draw(){
+ const name=$('#nm').value.trim();if(!name){say('Enter a name first.');return}
+ $('#drb').disabled=true;say('Drawing…');
+ try{
+  const t=await claude(`Draw a cute cartoon caricature of a "${name}" houseplant in a pot, with a friendly face and its signature leaf shape exaggerated. Reply with ONLY one SVG: viewBox="0 0 200 200", a soft pastel background, bold simple shapes, no text, no scripts, no images, under 3000 characters.`,2500);
+  const m=t.match(/<svg[\s\S]*<\/svg>/i);if(!m)throw 0;
+  cur.svg=m[0].replace(/<script[\s\S]*?<\/script>/gi,'').replace(/\son\w+="[^"]*"/gi,'');say('Done!');
+ }catch(e){cur.svg=gen(name);say(e=='nokey'?'Drew a quick one. Add an API key in ⚙️ for Claude’s version.':'Claude couldn’t draw it, so here’s a quick one.')}
+ $('#pv').innerHTML=pic(cur,'pic big');$('#drb').disabled=false}
+
+/* settings */
+$('#gear').onclick=()=>{
+ $('#sheet').innerHTML=`<h2>Settings</h2><label class="l">Claude API key</label><input id="ak" type="password" placeholder="sk-ant-…" value="${esc(ld('leafy.key',''))}" autocomplete="off">
+ <div class="msg">Used for photo identification and Claude-drawn caricatures. Stored only on this device and sent only to Anthropic.</div>
+ <div class="row"><button id="aks">Save</button><button class="soft" id="akc">Close</button></div>`;
+ $('#ov').classList.add('on');$('#akc').onclick=close;$('#aks').onclick=()=>{sv('leafy.key',$('#ak').value.trim());close()}};
+
+/* version + What's new (hold the version number) */
+let t;const v=$('#ver');
+v.addEventListener('pointerdown',()=>{t=setTimeout(()=>$('#wn').classList.add('on'),600)});
+['pointerup','pointerleave','pointercancel'].forEach(e=>v.addEventListener(e,()=>clearTimeout(t)));
+v.addEventListener('contextmenu',e=>e.preventDefault());
+$('#cls').onclick=()=>$('#wn').classList.remove('on');
+const MOON='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+const SUNI='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const isDark=()=>{const a=document.documentElement.dataset.theme;return a?a=='dark':matchMedia('(prefers-color-scheme:dark)').matches};
+const th=ld('leafy.theme','');if(th)document.documentElement.dataset.theme=th;
+const paint=()=>{$('#thm').innerHTML=isDark()?SUNI:MOON;document.querySelector('meta[name=theme-color]').content=isDark()?'#1a211b':'#f3ebdc'};
+$('#thm').onclick=()=>{const n=isDark()?'light':'dark';document.documentElement.dataset.theme=n;sv('leafy.theme',n);paint()};
+paint();render();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
