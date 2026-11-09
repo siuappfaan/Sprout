@@ -59,12 +59,14 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:var(--g)}
 <div id="list"></div>
 </main>
 <button class="fab" id="add" aria-label="Add plant">+</button>
-<footer><span id="ver">v1.1.0</span></footer>
+<footer><span id="ver">v1.2.0</span></footer>
 <div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
 <div class="ov wn" id="wn"><div class="sheet">
 <button class="icon" id="cls" aria-label="Close">✕</button>
 <button class="icon" id="thm" aria-label="Toggle dark or light mode"></button>
 <h2>What’s new</h2>
+<h3>v1.2.0</h3>
+<ul><li>Hand-drawn caricatures for Monstera, Chinese evergreen, Arrowhead, Ghost plant, Snake plant and Echeveria / rosette plants</li><li>These draw instantly and offline, with no API key needed</li></ul>
 <h3>v1.1.0</h3>
 <ul><li>Now an installable app that works offline</li><li>Fresh beige and green look</li><li>Caricatures always work: Claude draws them when an API key is set, otherwise Leafy draws one itself</li></ul>
 <h3>v1.0.0</h3>
@@ -86,13 +88,48 @@ const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const pic=(p,c='pic')=>`<div class="${c}">${p.svg?`<img alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(p.svg)}">`:'🪴'}</div>`;
 
 /* offline caricature: a friendly potted plant, seeded by name */
-function gen(name){let h=0;for(const c of name||'x')h=(h*31+c.charCodeAt(0))>>>0;
+function generic(name){let h=0;for(const c of name||'x')h=(h*31+c.charCodeAt(0))>>>0;
  const r=n=>{h=(h*1103515245+12345)>>>0;return h%n};
  const bgs=['#dcebd3','#f6e3b8','#f3d6c4','#d6e6e0'],pots=['#d98a5f','#c9704f','#7aa6a0','#e0b34f'],gr=['#3f7d58','#5a9a52','#2f6b4a','#6cae6a'];
  const n=3+r(3);let L='';
  for(let i=0;i<n;i++){const a=-55+110*i/(n-1),w=11+r(10),l=34+r(18);L+=`<ellipse cx="100" cy="${118-l}" rx="${w}" ry="${l}" fill="${gr[r(4)]}" transform="rotate(${a} 100 120)"/>`}
  const pot=pots[r(4)];
  return`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="${bgs[r(4)]}"/>${L}<path d="M58 120h84l-10 58a10 10 0 0 1-10 8H78a10 10 0 0 1-10-8z" fill="${pot}"/><rect x="52" y="112" width="96" height="18" rx="9" fill="${pot}"/><circle cx="84" cy="150" r="5" fill="#2b3a2e"/><circle cx="116" cy="150" r="5" fill="#2b3a2e"/><circle cx="76" cy="160" r="6" fill="#ff9a8a" opacity=".6"/><circle cx="124" cy="160" r="6" fill="#ff9a8a" opacity=".6"/><path d="M90 160q10 9 20 0" stroke="#2b3a2e" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>`}
+
+/* hand-drawn caricatures */
+const FACE='<circle cx="84" cy="150" r="5" fill="#2b3a2e"/><circle cx="116" cy="150" r="5" fill="#2b3a2e"/><circle cx="76" cy="160" r="6" fill="#ff9a8a" opacity=".6"/><circle cx="124" cy="160" r="6" fill="#ff9a8a" opacity=".6"/><path d="M90 160q10 9 20 0" stroke="#2b3a2e" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
+const potSvg=c=>`<path d="M58 120h84l-10 58a10 10 0 0 1-10 8H78a10 10 0 0 1-10-8z" fill="${c}"/><rect x="52" y="112" width="96" height="18" rx="9" fill="${c}"/>`;
+const wrap=(bg,leaves,pot)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="${bg}"/>${leaves}${potSvg(pot)}${FACE}</svg>`;
+const T=(x,y,a,s)=>`translate(${x} ${y}) rotate(${a}) scale(${s})`;
+const rose=(cx,cy,r,cols,n,stroke)=>{let o='';cols.forEach((c,i)=>{const rr=r*(1-i*.27),k=Math.max(4,n-2*i);for(let j=0;j<k;j++){const a=360*j/k+(i%2?180/k:0);o+=`<ellipse cx="0" cy="${-rr*.5}" rx="${rr*.3}" ry="${rr*.52}" fill="${c}"${stroke?` stroke="${stroke}" stroke-width="1.5"`:''} transform="translate(${cx} ${cy}) rotate(${a})"/>`}});return o};
+const ART={
+monstera:{bg:'#dcebd3',pot:'#d98a5f',f:bg=>{
+ const L='M0 0C-22 6 -40 -14 -34 -40C-28 -62 -8 -72 0 -78C8 -72 28 -62 34 -40C40 -14 22 6 0 0Z';
+ const sl=`<path d="M-33 -30L-14 -26M-30 -50L-12 -42M33 -30L14 -26M30 -50L12 -42" stroke="${bg}" stroke-width="4" stroke-linecap="round"/>`;
+ const lf=(x,y,a,s,c)=>`<g transform="${T(x,y,a,s)}"><path d="${L}" fill="${c}"/><path d="M0 -2V-66" stroke="#9fd0a0" stroke-width="2" stroke-linecap="round"/>${sl}</g>`;
+ return`<path d="M100 120Q86 104 80 86M100 120Q112 100 124 80M102 120Q130 116 146 104" stroke="#4a8a4f" stroke-width="4" fill="none" stroke-linecap="round"/>`+lf(80,86,-18,.95,'#2f6b4a')+lf(124,80,18,.95,'#3f7d58')+lf(146,104,62,.62,'#5a9a52')}},
+chinese:{bg:'#f6e3b8',pot:'#c9704f',f:()=>{
+ const L='M0 0C-26 -14 -26 -56 0 -84C26 -56 26 -14 0 0Z',sp=(x,y,rx,ry,r)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="#cfe3c4" opacity=".7" transform="rotate(${r} ${x} ${y})"/>`;
+ const lf=(a,s,c)=>`<g transform="${T(100,120,a,s)}"><path d="${L}" fill="${c}" stroke="#e58f9a" stroke-width="2.5"/><path d="M0 -6V-70" stroke="#cfe3c4" stroke-width="2"/>${sp(-9,-34,4,8,-18)}${sp(9,-48,3.5,7,18)}${sp(-7,-60,3,5,0)}</g>`;
+ return lf(-52,.8,'#2f6b4a')+lf(52,.8,'#2f6b4a')+lf(-26,.95,'#3f7d58')+lf(26,.95,'#3f7d58')+lf(0,1,'#4a8a55')}},
+arrow:{bg:'#d6e6e0',pot:'#7aa6a0',f:()=>{
+ const L='M0 -2C-8 -4 -20 4 -28 14C-36 -8 -24 -34 0 -62C24 -34 36 -8 28 14C20 4 8 -4 0 -2Z';
+ const lf=(x,y,a,s,c)=>`<g transform="${T(x,y,a,s)}"><path d="${L}" fill="${c}"/><path d="M0 -4V-54" stroke="#e4f3cf" stroke-width="2.2" stroke-linecap="round"/></g>`;
+ return`<path d="M100 120Q74 110 62 96M100 120V100M100 120Q126 110 138 96" stroke="#5a9a52" stroke-width="3" fill="none" stroke-linecap="round"/>`+lf(62,96,-38,.85,'#8fc47a')+lf(138,96,38,.85,'#8fc47a')+lf(100,100,0,.95,'#a5d38a')}},
+ghost:{bg:'#e6def0',pot:'#e0b34f',f:()=>{
+ const c=['#b4aed4','#c6c1e2','#d6d2ec','#e6e3f5'],s='#d9a3c4';
+ return`<path d="M100 118Q70 112 44 138M100 118Q132 108 156 136M100 118V90" stroke="#a49fc4" stroke-width="5" fill="none" stroke-linecap="round"/>`+rose(42,142,18,c,8,s)+rose(158,140,18,c,8,s)+rose(100,76,36,c,10,s)}},
+snake:{bg:'#f3d6c4',pot:'#8c9a7a',f:()=>{
+ const L='M-9 0C-14 -50 -8 -100 0 -112C8 -100 14 -50 9 0Z',B='M-11 -28q11 7 22 0M-12 -50q12 7 24 0M-10 -72q10 7 20 0M-6 -92q6 5 12 0';
+ const lf=(a,s,c)=>`<g transform="${T(100,120,a,s)}"><path d="${L}" fill="${c}" stroke="#d8c96a" stroke-width="2.5"/><path d="${B}" stroke="#7fb06a" stroke-width="2.5" fill="none" opacity=".8"/></g>`;
+ return lf(-24,.72,'#2f6b4a')+lf(25,.7,'#2f6b4a')+lf(-11,.88,'#3a7650')+lf(12,.84,'#3a7650')+lf(0,.97,'#3f7d58')}},
+echeveria:{bg:'#f4e8c9',pot:'#d98a5f',f:()=>
+ rose(100,84,48,['#7fb8a4','#92c6b0','#a8d5bd','#c3e4cc'],10,'#e8a0aa')+'<circle cx="100" cy="84" r="5" fill="#e6f4e0"/>'}
+};
+const KINDS=[['monstera',/monstera|swiss cheese/],['chinese',/aglaonema|chinese evergreen/],['arrow',/syngonium|arrowhead|nephthytis/],['ghost',/graptopetalum|ghost plant/],['snake',/sansevieria|dracaena trifasciata|snake plant|mother.?in.?law/],['echeveria',/echeveria|rosette|hens and chicks|houseleek|sempervivum/]];
+const kindOf=s=>{s=(s||'').toLowerCase();const k=KINDS.find(x=>x[1].test(s));return k&&k[0]};
+function gen(name,species){const k=kindOf(name+' '+(species||''));if(!k)return generic(name);const a=ART[k];return wrap(a.bg,a.f(a.bg),a.pot)}
+
 
 function status(p){const u=until(p);
  if(u<0)return[`Overdue by ${-u} day${u==-1?'':'s'}`,'late'];
@@ -125,7 +162,7 @@ function openSheet(p){
  $('#ph').onchange=e=>{photo=e.target.files[0]||null;$('#idb').disabled=!photo;if(photo)say('Photo ready. Tap Identify.')};
  $('#idb').onclick=identify;$('#drb').onclick=draw;$('#cn').onclick=close;
  $('#sv').onclick=()=>{cur.name=$('#nm').value.trim()||'Unnamed plant';cur.sun=$('#sn').value;cur.every=Math.max(1,parseInt($('#ev').value)||7);cur.notes=$('#nt').value;
-  if(!cur.svg)cur.svg=gen(cur.name);
+  if(!cur.svg)cur.svg=gen(cur.name,cur.species);
   const i=plants.findIndex(x=>x.id==cur.id);i<0?plants.push(cur):plants[i]=cur;save();close();render()};
  if(!nw)$('#dl').onclick=()=>{if(confirm('Delete this plant?')){plants=plants.filter(x=>x.id!=cur.id);save();close();render()}};
 }
@@ -158,12 +195,13 @@ async function identify(){
 
 async function draw(){
  const name=$('#nm').value.trim();if(!name){say('Enter a name first.');return}
+ const k=kindOf(name+' '+cur.species);if(k){cur.svg=gen(name,cur.species);$('#pv').innerHTML=pic(cur,'pic big');say('Drew your '+name+'!');return}
  $('#drb').disabled=true;say('Drawing…');
  try{
   const t=await claude(`Draw a cute cartoon caricature of a "${name}" houseplant in a pot, with a friendly face and its signature leaf shape exaggerated. Reply with ONLY one SVG: viewBox="0 0 200 200", a soft pastel background, bold simple shapes, no text, no scripts, no images, under 3000 characters.`,2500);
   const m=t.match(/<svg[\s\S]*<\/svg>/i);if(!m)throw 0;
   cur.svg=m[0].replace(/<script[\s\S]*?<\/script>/gi,'').replace(/\son\w+="[^"]*"/gi,'');say('Done!');
- }catch(e){cur.svg=gen(name);say(e=='nokey'?'Drew a quick one. Add an API key in ⚙️ for Claude’s version.':'Claude couldn’t draw it, so here’s a quick one.')}
+ }catch(e){cur.svg=gen(name,cur.species);say(e=='nokey'?'Drew a quick one. Add an API key in ⚙️ for Claude’s version.':'Claude couldn’t draw it, so here’s a quick one.')}
  $('#pv').innerHTML=pic(cur,'pic big');$('#drb').disabled=false}
 
 /* settings */
