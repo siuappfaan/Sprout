@@ -51,20 +51,23 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:var(--g)}
 .icon{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));width:44px;height:44px;padding:0;display:grid;place-items:center;background:var(--sand);color:var(--ink);border-radius:50%}
 #thm{right:16px}#cls{left:16px}
 .wn h3{margin:18px 0 4px;font-size:16px}.wn ul{margin:4px 0;padding-left:20px;color:var(--mut)}
+textarea{resize:vertical}
 </style>
 </head>
 <body>
 <main>
-<header><h1>Leafy <span>🌿</span></h1><button class="gear" id="gear" aria-label="Settings">⚙️</button></header>
+<header><h1>Leafy <span>🌿</span></h1></header>
 <div id="list"></div>
 </main>
 <button class="fab" id="add" aria-label="Add plant">+</button>
-<footer><span id="ver">v1.2.0</span></footer>
+<footer><span id="ver">v1.3.0</span></footer>
 <div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
 <div class="ov wn" id="wn"><div class="sheet">
 <button class="icon" id="cls" aria-label="Close">✕</button>
 <button class="icon" id="thm" aria-label="Toggle dark or light mode"></button>
 <h2>What’s new</h2>
+<h3>v1.3.0</h3>
+<ul><li>No API key needed: analyze a plant in Claude, then import the plant file it gives you</li><li>Plants now keep an analysis, care tips and estimated age</li><li>Copy-prompt button for asking Claude</li></ul>
 <h3>v1.2.0</h3>
 <ul><li>Hand-drawn caricatures for Monstera, Chinese evergreen, Arrowhead, Ghost plant, Snake plant and Echeveria / rosette plants</li><li>These draw instantly and offline, with no API key needed</li></ul>
 <h3>v1.1.0</h3>
@@ -140,76 +143,67 @@ function render(){
  const el=$('#list');
  if(!plants.length){el.innerHTML='<div class="empty"><b>🪴</b>No plants yet.<br>Tap + to add your first one.</div>';return}
  el.innerHTML=[...plants].sort((a,b)=>until(a)-until(b)).map(p=>{const[t,c]=status(p),u=until(p),pc=Math.max(4,Math.min(100,(1-u/p.every)*100));
-  return`<div class="card">${pic(p)}<div class="info" data-id="${p.id}"><b>${esc(p.name)}</b><div class="chips"><span class="chip">☀️ ${esc(p.sun)}</span><span class="chip">💧 ${p.every}d</span></div><div class="bar ${c}"><i style="width:${pc}%"></i></div><div class="st ${c}">${t}</div></div><button class="drop" data-w="${p.id}" aria-label="Water">💧</button></div>`}).join('');
+  return`<div class="card">${pic(p)}<div class="info" data-id="${p.id}"><b>${esc(p.name)}</b><div class="chips"><span class="chip">☀️ ${esc(p.sun)}</span><span class="chip">💧 ${p.every}d</span>${p.age?`<span class="chip">🌱 ${esc(p.age)}</span>`:''}</div><div class="bar ${c}"><i style="width:${pc}%"></i></div><div class="st ${c}">${t}</div></div><button class="drop" data-w="${p.id}" aria-label="Water">💧</button></div>`}).join('');
  el.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{plants.find(x=>x.id==b.dataset.w).log.push(today());save();render()});
  el.querySelectorAll('.info').forEach(b=>b.onclick=()=>openSheet(plants.find(x=>x.id==b.dataset.id)));
 }
 
-let cur,photo;
-function openSheet(p){
- photo=null;cur=p?{...p,log:[...p.log]}:{id:Date.now(),name:'',species:'',sun:'Bright indirect',every:7,notes:'',svg:'',added:today(),log:[]};
- const nw=!p;
+const PROMPT=`Analyze the plant in my photo and make me a Leafy plant file.
+Create a downloadable file named leafy-<plant-name>.json. If you can't create files, reply with only the JSON in one code block.
+Use exactly this structure:
+{"leafy":1,"name":"common name","species":"scientific name","sun":"Low light | Bright indirect | Partial sun | Full sun","waterDays":7,"age":"best guess, e.g. About 2 years","analysis":"2-4 sentences on what it is and how it looks, including its health and any problems","tips":["4-6 short care tips"],"svg":"<svg ...>"}
+Rules: sun must be exactly one of the four options. waterDays is a whole number of days between waterings for a typical home. For svg, draw a cute cartoon caricature of this plant in a pot, with a friendly face (dot eyes, pink cheeks, smile), its signature leaf shape exaggerated, a soft pastel background, viewBox 0 0 200 200, bold simple shapes, no text, no scripts, no images, under 3000 characters. Use single quotes for all SVG attributes so the JSON stays valid.`;
+function parsePlant(t){
+ const m=String(t).match(/\{[\s\S]*\}/);if(!m)throw 0;
+ const o=JSON.parse(m[0]);if(!o||!o.name)throw 0;
+ const s=String(o.sun||'').toLowerCase();
+ const sun=SUN.find(x=>x.toLowerCase()==s)||(/low|shade/.test(s)?'Low light':/part/.test(s)?'Partial sun':/full|direct/.test(s)&&!/indirect/.test(s)?'Full sun':'Bright indirect');
+ const sm=typeof o.svg=='string'&&o.svg.match(/<svg[\s\S]*<\/svg>/i);
+ let svg=sm?sm[0].replace(/<script[\s\S]*?<\/script>/gi,'').replace(/\son\w+\s*=\s*("[^"]*"|'[^']*')/gi,''):'';
+ if(svg&&!/xmlns=/.test(svg))svg=svg.replace('<svg','<svg xmlns="http://www.w3.org/2000/svg"');
+ if(!svg)svg=gen(o.name,o.species);
+ return{id:Date.now()+Math.floor(Math.random()*1e3),name:String(o.name),species:String(o.species||''),sun,every:Math.max(1,Math.min(90,Math.round(+o.waterDays)||7)),age:String(o.age||''),analysis:String(o.analysis||''),tips:Array.isArray(o.tips)?o.tips.join('\n'):String(o.tips||''),svg,added:today(),log:[]}}
+
+let cur;
+function openSheet(p,draft){
+ const nw=!p||!!draft;
+ cur=draft?{...draft}:p?{...p,log:[...p.log]}:{id:Date.now(),name:'',species:'',sun:'Bright indirect',every:7,age:'',analysis:'',tips:'',svg:'',added:today(),log:[]};
+ if(cur.tips==null)cur.tips=cur.notes||'';
  $('#sheet').innerHTML=`<h2>${nw?'New plant':'Plant details'}</h2><div id="pv">${pic(cur,'pic big')}</div>
- <label class="pick" for="ph">📷 Add a photo to identify</label><input class="vh" type="file" id="ph" accept="image/*">
- <div class="row"><button class="soft" id="idb" disabled>🔍 Identify</button><button class="soft" id="drb">🎨 Draw me</button></div><div class="msg" id="msg"></div>
+ ${nw?`<label class="pick" for="fi">📥 Import a plant file</label><input class="vh" type="file" id="fi" multiple>
+ <div class="row"><button class="soft" id="cp">📋 Copy Claude prompt</button><button class="soft" id="ps">📝 Paste instead</button></div><div id="pz"></div>`:''}
+ <div class="msg" id="msg"></div>
  <label class="l">Name</label><input id="nm" value="${esc(cur.name)}" placeholder="e.g. Monstera">
  <label class="l">Sun needs</label><select id="sn">${SUN.map(s=>`<option${s==cur.sun?' selected':''}>${s}</option>`).join('')}</select>
  <label class="l">Water every (days)</label><input id="ev" type="number" inputmode="numeric" min="1" max="90" value="${cur.every}">
- <label class="l">Care notes</label><textarea id="nt" rows="2">${esc(cur.notes)}</textarea>
+ <label class="l">Estimated age</label><input id="ag" value="${esc(cur.age)}" placeholder="e.g. About 2 years">
+ <label class="l">Analysis</label><textarea id="an" rows="3">${esc(cur.analysis)}</textarea>
+ <label class="l">Care tips</label><textarea id="nt" rows="4">${esc(cur.tips)}</textarea>
+ <div class="row"><button class="soft" id="drb">🎨 Redraw caricature</button></div>
  ${nw?'':`<label class="l">Watering log</label><ul class="log">${[...cur.log].reverse().map(d=>`<li>${fmt(dn(d))}</li>`).join('')||'<li>Not watered yet</li>'}</ul>`}
  <div class="row"><button id="sv">Save</button><button class="soft" id="cn">Cancel</button>${nw?'':'<button class="del" id="dl">Delete</button>'}</div>`;
  $('#ov').classList.add('on');
- $('#ph').onchange=e=>{photo=e.target.files[0]||null;$('#idb').disabled=!photo;if(photo)say('Photo ready. Tap Identify.')};
- $('#idb').onclick=identify;$('#drb').onclick=draw;$('#cn').onclick=close;
- $('#sv').onclick=()=>{cur.name=$('#nm').value.trim()||'Unnamed plant';cur.sun=$('#sn').value;cur.every=Math.max(1,parseInt($('#ev').value)||7);cur.notes=$('#nt').value;
+ if(nw)say(draft?'Imported! Check the details, then Save.':'Analyze a plant with Claude, then import the file it gives you.');
+ $('#drb').onclick=()=>{const n=$('#nm').value.trim();if(!n){say('Enter a name first.');return}cur.svg=gen(n,cur.species);$('#pv').innerHTML=pic(cur,'pic big');say(kindOf(n+' '+cur.species)?'Drew your '+n+'!':'Drew a quick one.')};
+ $('#cn').onclick=close;
+ $('#sv').onclick=()=>{cur.name=$('#nm').value.trim()||'Unnamed plant';cur.sun=$('#sn').value;cur.every=Math.max(1,parseInt($('#ev').value)||7);cur.age=$('#ag').value.trim();cur.analysis=$('#an').value;cur.tips=$('#nt').value;delete cur.notes;
   if(!cur.svg)cur.svg=gen(cur.name,cur.species);
   const i=plants.findIndex(x=>x.id==cur.id);i<0?plants.push(cur):plants[i]=cur;save();close();render()};
  if(!nw)$('#dl').onclick=()=>{if(confirm('Delete this plant?')){plants=plants.filter(x=>x.id!=cur.id);save();close();render()}};
+ if(nw){
+  $('#fi').onchange=async e=>{const L=[];for(const f of e.target.files){try{L.push(parsePlant(await f.text()))}catch(x){}}
+   if(!L.length){say('Couldn’t read that file. Is it a Leafy plant file from Claude?');return}
+   if(L.length==1){openSheet(null,L[0]);return}
+   L.forEach((q,i)=>q.id+=i);plants.push(...L);save();close();render()};
+  $('#cp').onclick=async()=>{try{await navigator.clipboard.writeText(PROMPT);say('Prompt copied. Paste it into Claude with a photo of your plant.')}catch(x){$('#pz').innerHTML='<textarea id="pp" rows="6" readonly style="margin-top:8px"></textarea>';$('#pp').value=PROMPT;$('#pp').select();say('Select all and copy this prompt.')}};
+  $('#ps').onclick=()=>{$('#pz').innerHTML='<textarea id="pt" rows="4" placeholder="Paste the plant file contents here" style="margin-top:8px"></textarea><div class="row"><button id="pi">Import pasted text</button></div>';
+   $('#pi').onclick=()=>{try{openSheet(null,parsePlant($('#pt').value))}catch(x){say('That doesn’t look like a Leafy plant file.')}}};
+ }
 }
 const close=()=>$('#ov').classList.remove('on');
 $('#ov').onclick=e=>{if(e.target.id=='ov')close()};
 $('#add').onclick=()=>openSheet();
 const say=t=>{const m=$('#msg');if(m)m.textContent=t};
-
-/* Claude API (user's own key, stored on this device) */
-async function claude(content,max){
- const key=ld('leafy.key','');if(!key)throw 'nokey';
- const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-5-5',max_tokens:max,messages:[{role:'user',content}]})});
- const j=await r.json();if(!r.ok)throw (j.error&&j.error.message)||'API error';
- return j.content.map(c=>c.text||'').join('')}
-async function b64(f){
- const bm=await createImageBitmap(f),k=Math.min(1,768/Math.max(bm.width,bm.height)),c=document.createElement('canvas');
- c.width=bm.width*k;c.height=bm.height*k;c.getContext('2d').drawImage(bm,0,0,c.width,c.height);
- return c.toDataURL('image/jpeg',.8).split(',')[1]}
-
-async function identify(){
- if(!photo)return;$('#idb').disabled=true;say('Identifying your plant…');
- try{
-  const t=await claude([{type:'image',source:{type:'base64',media_type:'image/jpeg',data:await b64(photo)}},{type:'text',text:'Identify the plant in this photo. Reply with ONLY JSON: {"name":"common name","species":"scientific name","sun":"one of: Low light, Bright indirect, Partial sun, Full sun","waterDays":integer typical days between waterings for a home plant,"notes":"one short care tip"}'}],400);
-  const r=JSON.parse(t.match(/\{[\s\S]*\}/)[0]);
-  $('#nm').value=r.name||'';cur.species=r.species||'';if(SUN.includes(r.sun))$('#sn').value=r.sun;
-  if(r.waterDays)$('#ev').value=Math.round(r.waterDays);$('#nt').value=r.notes||'';
-  say('Identified! Drawing its caricature…');await draw();
- }catch(e){say(e=='nokey'?'Add your Claude API key in ⚙️ Settings to identify from photos. You can still fill details by hand.':'Couldn’t identify that one. Try another photo or enter details by hand.')}
- $('#idb').disabled=!photo}
-
-async function draw(){
- const name=$('#nm').value.trim();if(!name){say('Enter a name first.');return}
- const k=kindOf(name+' '+cur.species);if(k){cur.svg=gen(name,cur.species);$('#pv').innerHTML=pic(cur,'pic big');say('Drew your '+name+'!');return}
- $('#drb').disabled=true;say('Drawing…');
- try{
-  const t=await claude(`Draw a cute cartoon caricature of a "${name}" houseplant in a pot, with a friendly face and its signature leaf shape exaggerated. Reply with ONLY one SVG: viewBox="0 0 200 200", a soft pastel background, bold simple shapes, no text, no scripts, no images, under 3000 characters.`,2500);
-  const m=t.match(/<svg[\s\S]*<\/svg>/i);if(!m)throw 0;
-  cur.svg=m[0].replace(/<script[\s\S]*?<\/script>/gi,'').replace(/\son\w+="[^"]*"/gi,'');say('Done!');
- }catch(e){cur.svg=gen(name,cur.species);say(e=='nokey'?'Drew a quick one. Add an API key in ⚙️ for Claude’s version.':'Claude couldn’t draw it, so here’s a quick one.')}
- $('#pv').innerHTML=pic(cur,'pic big');$('#drb').disabled=false}
-
-/* settings */
-$('#gear').onclick=()=>{
- $('#sheet').innerHTML=`<h2>Settings</h2><label class="l">Claude API key</label><input id="ak" type="password" placeholder="sk-ant-…" value="${esc(ld('leafy.key',''))}" autocomplete="off">
- <div class="msg">Used for photo identification and Claude-drawn caricatures. Stored only on this device and sent only to Anthropic.</div>
- <div class="row"><button id="aks">Save</button><button class="soft" id="akc">Close</button></div>`;
- $('#ov').classList.add('on');$('#akc').onclick=close;$('#aks').onclick=()=>{sv('leafy.key',$('#ak').value.trim());close()}};
 
 /* version + What's new (hold the version number) */
 let t;const v=$('#ver');
