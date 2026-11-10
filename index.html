@@ -21,7 +21,7 @@ h1{margin:10px 2px 8px;font-size:30px;letter-spacing:-.8px;font-weight:800}
 .sec{font-size:11.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--mut);margin:16px 4px 7px}
 .card{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:9px 10px;margin-bottom:7px;cursor:pointer}
 .pic{width:54px;height:54px;border-radius:17px;background:var(--gs);flex:none;overflow:hidden;position:relative}
-.pic img{width:100%;height:100%;display:block;transform:scale(1.14);transform-origin:50% 64%}.pic:empty{display:grid;place-items:center}.pic:empty::before{content:"🌱";font-size:26px;opacity:.75}
+.pic img{width:100%;height:100%;display:block;object-fit:cover}.pic:empty{display:grid;place-items:center}.pic:empty::before{content:"🌱";font-size:26px;opacity:.75}
 .info{flex:1;min-width:0}.info b{display:block;font-size:16px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .meta{font-size:12.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pill{font-size:12px;font-weight:800;padding:3px 9px;border-radius:99px;background:var(--gs);color:var(--g);white-space:nowrap}
@@ -74,7 +74,7 @@ details textarea{margin-bottom:12px}
 <body>
 <main><h1>Leafy</h1><div id="list"></div></main>
 <button class="fab" id="add" aria-label="Add plant"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
-<footer><span id="ver">v2.2.0</span></footer>
+<footer><span id="ver">v3.0.0</span></footer>
 <div class="toast" id="toast"></div>
 <div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
 <div class="ov" id="lib"><div class="sheet" id="libs"></div></div>
@@ -82,6 +82,8 @@ details textarea{margin-bottom:12px}
 <button class="icon" id="cls" aria-label="Close">✕</button>
 <button class="icon" id="thm" aria-label="Toggle dark or light mode"></button>
 <h2>What’s new</h2>
+<h3>v3.0.0</h3>
+<ul><li>All new illustrated plant pictures: 27 high-resolution drawings stored as image files, so they work offline</li><li>Your own plants (monstera, snake plant, echeveria, ghost plant, umbrella plant, Chinese evergreen, arrowhead) now have drawings that match them</li><li>Existing plants switch to the new pictures automatically</li></ul>
 <h3>v2.2.0</h3>
 <ul><li>Drawings redrawn to match real plants: arrowhead, Chinese evergreen, umbrella plant, ghost plant, snake plant, monstera and a tall echeveria, each with a matching planter</li><li>New umbrella plant and tall echeveria in the library (30 drawings)</li></ul>
 <h3>v2.1.0</h3>
@@ -98,78 +100,13 @@ details textarea{margin-bottom:12px}
 <ul><li>Plant log with watering history and next-watering dates</li></ul>
 </div></div>
 <script>
-/* ===== Leafy drawing library v3: flat two-tone botanical stickers, patterned planters, no outlines ===== */
-const GA=['#a9d483','#80ba60'],GB=['#72b880','#4f966a'],GC=['#4f9c6c','#3a7d58'],GD=['#2f7b59','#256149'],GE=['#cde07d','#a9c85c'];
-const SH={oval:['M0 0C18 -10 20 -42 0 -60Z',60],sword:['M0 0C9 -34 6 -62 0 -78Z',78],heart:['M0 0C20 4 34 -14 28 -36C22 -54 6 -60 0 -66Z',66],arrow:['M0 -2C6 -4 16 4 24 18C32 -6 20 -36 0 -64Z',64],round:['M0 0C20 -4 22 -30 0 -32Z',32],fig:['M0 0C8 -10 34 -26 26 -50C18 -66 6 -66 0 -64Z',64],blade:['M0 0C6 -30 5 -60 0 -84Z',84],spear:['M0 0C12 -22 8 -44 0 -66Z',66],jade:['M0 0C10 -2 10 -16 0 -18Z',18],pad:['M0 0C22 -6 24 -44 0 -46Z',46],spathe:['M0 0C12 -6 14 -26 0 -40Z',40],rp:['M0 0C13 -8 15 -26 0 -36Z',36],spat:['M0 0C4 -8 18 -14 18 -26C18 -34 6 -38 0 -36Z',36],mon:['M0 0C16 6 34 -8 32 -34C30 -56 10 -66 0 -72Z',72]};
-const LF=(k,[c1,c2],x,y,a,s,ex='')=>{const[d,h]=SH[k],w=h*.2;let v='';if(['oval','heart','arrow','fig','mon'].includes(k))for(let i=1;i<4;i++){const y=h*.2*i;v+=`M0 ${-y}l${w} ${-w*.7}M0 ${-y}l${-w} ${-w*.7}`}return`<g transform="translate(${x} ${y}) rotate(${a}) scale(${s})"><path d="${d}" fill="${c1}"/><path d="${d}" fill="${c2}" transform="scale(-1 1)"/>${v?`<path d="${v}" stroke="#1f4d38" stroke-opacity=".2" stroke-width="1" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`:''}${k=='pad'?'':`<path d="M0 -1V${-h*.92}" stroke="#1f4d38" stroke-opacity=".4" stroke-width="1.4" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`}${ex}</g>`};
-const ST=(d,c='#5f9a6b',w=3)=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
-const fan=(x,y,k,li,ex='')=>li.map(([a,s,c])=>LF(k,c,x,y,a,s,ex)).join('');
-const pairs=(x0,y0,x1,y1,n,k,c,s,ang,alt,sc='#6f9a5c',w=3)=>{const a0=Math.atan2(x1-x0,y0-y1)*180/Math.PI;let o=ST(`M${x0} ${y0}L${x1} ${y1}`,sc,w);for(let i=1;i<=n;i++){const t=i/(n+1)*.9+.1,x=x0+(x1-x0)*t,y=y0+(y1-y0)*t;o+=alt?LF(k,c,x,y,a0+(i%2?ang:-ang),s):LF(k,c,x,y,a0-ang,s)+LF(k,c,x,y,a0+ang,s)}return o+LF(k,c,x1,y1,a0,s)};
-const rose=(cx,cy,r,cs,n,k='rp')=>{let o='';cs.forEach((c,i)=>{const s=r/34*(1-i*.24),m=Math.max(5,n-2*i);for(let j=0;j<m;j++)o+=LF(k,c,cx,cy,360*j/m+(i%2?180/m:0),s)});return o};
-const pearls=(x0,y0,cx,cy,x1,y1,n,r,c='#9ccc86')=>{let o=ST(`M${x0} ${y0}Q${cx} ${cy} ${x1} ${y1}`,c,1.5);for(let i=0;i<=n;i++){const t=i/n,u=1-t,X=(u*u*x0+2*u*t*cx+t*t*x1).toFixed(1),Y=(u*u*y0+2*u*t*cy+t*t*y1).toFixed(1);o+=`<circle cx="${X}" cy="${Y}" r="${r}" fill="${c}"/><circle cx="${X-r*.3}" cy="${Y-r*.3}" r="${r*.35}" fill="#fff" opacity=".4"/>`}return o};
-const col=(x,top,w,[c1,c2])=>`<path d="M${x} 118H${x-w}V${top+w}a${w} ${w} 0 0 1 ${w} ${-w}Z" fill="${c2}"/><path d="M${x} 118H${x+w}V${top+w}a${w} ${w} 0 0 0 ${-w} ${-w}Z" fill="${c1}"/><path d="M${x} ${top+4}V118M${x-w*.55} ${top+w}V118M${x+w*.55} ${top+w}V118" stroke="#1f4d38" stroke-opacity=".25" stroke-width="1.4" fill="none" vector-effect="non-scaling-stroke"/>`+[0,1,2,3,4].map(i=>`<path d="M${x-w*.8} ${top+22+i*16}l3 -3M${x+w*.8} ${top+22+i*16}l-3 -3" stroke="#f3ead6" stroke-width="1.6" stroke-linecap="round"/>`).join('')+`<g fill="#f08aa6"><circle cx="${x-3}" cy="${top-2}" r="3.6"/><circle cx="${x+3}" cy="${top-2}" r="3.6"/><circle cx="${x}" cy="${top-6}" r="3.6"/></g><circle cx="${x}" cy="${top-2}" r="2" fill="#f7d36a"/>`;
-const vine=(c1,c2,wf)=>{const h=(x,y,a,k,c)=>LF('heart',c,x,y,a,`${wf*k} ${k}`);return[ST('M100 118Q90 96 84 76M100 118Q108 92 118 70','#5f9a6b',3)+h(84,78,-18,.8,c1)+h(118,72,20,.85,c2)+h(100,92,0,.7,c1),ST('M70 118Q50 124 48 148M130 118Q150 124 152 146','#5f9a6b',3)+h(48,150,180,.55,c2)+h(60,124,-125,.5,c1)+h(152,148,180,.55,c1)+h(140,124,125,.5,c2)]};
-/* patterns are drawn clipped to the planter body */
-const daisy=(x,y,a)=>[0,1,2,3,4].map(i=>`<circle cx="${(x+Math.cos(i*1.2566)*5).toFixed(1)}" cy="${(y+Math.sin(i*1.2566)*5).toFixed(1)}" r="3.4" fill="${a}"/>`).join('')+`<circle cx="${x}" cy="${y}" r="2.6" fill="#f4c64a"/>`;
-const rng=(n,f)=>Array.from({length:n},(_,i)=>f(i));
-const PAT={
- flower:a=>[[78,148],[104,142],[128,156],[90,172],[116,176]].map(([x,y])=>daisy(x,y,a)).join(''),
- dots:a=>rng(20,i=>`<circle cx="${70+(i%5)*16+(Math.floor(i/5)%2)*8}" cy="${142+Math.floor(i/5)*15}" r="4.2" fill="${a}"/>`).join(''),
- grid:a=>`<path d="${rng(6,i=>`M56 ${130+i*14}H144`).join('')}${rng(7,i=>`M${58+i*14} 128V190`).join('')}" stroke="${a}" stroke-opacity=".7" stroke-width="2"/>`,
- speck:a=>[[74,142,20],[96,152,-30],[120,144,10],[84,166,40],[110,172,-10],[130,170,30],[70,180,0]].map(([x,y,r])=>`<ellipse cx="${x}" cy="${y}" rx="6" ry="3.4" fill="${a}" transform="rotate(${r} ${x} ${y})"/>`).join(''),
- scallop:a=>`<rect x="56" y="128" width="88" height="18" fill="${a}"/>`+rng(6,i=>`<circle cx="${62+i*15.2}" cy="146" r="8" fill="${a}"/>`).join(''),
- blobs:a=>`<circle cx="78" cy="164" r="22" fill="${a}"/><circle cx="124" cy="150" r="17" fill="${a}"/><circle cx="106" cy="178" r="4" fill="#e6b44f"/><circle cx="96" cy="146" r="4" fill="#e6b44f"/><circle cx="132" cy="176" r="3.4" fill="#e6b44f"/>`,
- stripe:a=>rng(7,i=>`<rect x="${58+i*14}" y="126" width="7" height="64" fill="${a}"/>`).join(''),
- zig:a=>[150,168].map(y=>`<path d="M56 ${y}${rng(11,()=>'l8 -8 8 8').join('')}" stroke="${a}" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`).join(''),
- dash:a=>rng(15,i=>`<path d="M${66+(i%5)*16+(Math.floor(i/5)%2)*8} ${146+Math.floor(i/5)*16}l6 -7" stroke="${a}" stroke-width="3" stroke-linecap="round"/>`).join(''),
- rib:a=>rng(20,i=>`<rect x="${52+i*5}" y="126" width="2.2" height="64" fill="${a}"/>`).join(''),
- check:a=>rng(24,i=>(Math.floor(i/6)+i%6)%2?`<rect x="${56+(i%6)*16}" y="${126+Math.floor(i/6)*16}" width="16" height="16" fill="${a}"/>`:'').join(''),
- weave:a=>rng(9,i=>`<path d="M48 ${130+i*7.5}H152" stroke="${a}" stroke-width="1.6" opacity=".7"/>`+rng(13,j=>`<path d="M${52+j*8+(i%2)*4} ${130+i*7.5}v7.5" stroke="${a}" stroke-width="1.6" opacity=".7"/>`).join('')).join(''),
- wave:a=>[142,156,170,184].map(y=>`<path d="M56 ${y}q8 -7 16 0t16 0t16 0t16 0t16 0t16 0" stroke="${a}" stroke-width="3" fill="none" stroke-linecap="round"/>`).join(''),
- none:()=>''};
-const BODY={cup:'M62 126h76v50a12 12 0 0 1-12 12H74a12 12 0 0 1-12-12z',taper:'M62 128h76l-7 52q-1 6-7 6H76q-6 0-7-6z',flare:'M58 126h84l-12 52q-1 8-9 8H79q-8 0-9-8z',basket:'M52 126h96l-5 54q-1 8-9 8H66q-8 0-9-8z'},RIM={cup:[56,114,88],taper:[56,114,88],flare:[52,114,96],basket:[48,114,104]};
-const pot=([ty,c,r,pt,ac])=>{const b=BODY[ty],[rx,ry,rw]=RIM[ty];return`<ellipse cx="100" cy="190" rx="${ty=='basket'?50:44}" ry="4.5" fill="#000" opacity=".08"/>${ty=='flare'?`<ellipse cx="100" cy="187" rx="46" ry="6" fill="${r}"/>`:''}<defs><clipPath id="c"><path d="${b}"/></clipPath></defs><path d="${b}" fill="${c}"/><g clip-path="url(#c)">${PAT[pt](ac)}</g>`+(ty=='taper'?`<path d="M76 186v-9a6 6 0 0 1 12 0v9M112 186v-9a6 6 0 0 1 12 0v9" fill="${r}"/>`:'')+`<rect x="${rx}" y="${ry}" width="${rw}" height="15" rx="7.5" fill="${r}"/>`};
-const PT={daisy:['cup','#f2b8a0','#e29a80','flower','#fff'],dots:['cup','#f3ead6','#dccba6','dots','#e6b44f'],grid:['cup','#9dbbb0','#7fa396','grid','#f3ead6'],speck:['cup','#efc15a','#d9a53d','speck','#f6ecd2'],scallop:['taper','#d98a62','#b9663f','scallop','#9dbbb0'],blobs:['cup','#f3ead6','#dccba6','blobs','#a9c2bd'],stripe:['cup','#f3ead6','#dccba6','stripe','#e8957e'],zig:['taper','#d9825b','#c46d45','zig','#f3d9b8'],dash:['cup','#5c726b','#475b55','dash','#f3ead6'],plain:['taper','#b0694d','#955437','none','#000'],rib:['cup','#f6e6a3','#e6cd76','rib','#e3c96e'],check:['cup','#f3ead6','#5f9d82','check','#78b394'],weave:['basket','#d9b27a','#c19659','weave','#b88a4d'],wave:['cup','#b3b19a','#99977f','wave','#d3d1be'],olive:['cup','#f4ecd8','#2d2a28','stripe','#a3a05a'],navy:['flare','#2f4a8f','#243a78','none','#000'],blush:['cup','#e8b699','#d79f81','none','#000'],mist:['cup','#b9cfc8','#9bb6ae','dots','#f3ead6']};
-const CAC=['#7dbb86','#5fa06c'];
-const spk=(()=>{let o='',h=7;const R=()=>(h=(h*9301+49297)%233280)/233280;for(let i=0;i<40;i++){const y=-6-R()*50,f=Math.sin(Math.PI*-y/62)*.95+.05,x=(R()-.5)*2*12*f*.85,r=.9+R()*1.5;o+=`<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${r.toFixed(1)}" ry="${(r*.7).toFixed(1)}" fill="#efeecb" opacity=".85" transform="rotate(${(i*37)%180} ${x.toFixed(1)} ${y.toFixed(1)})"/>`}return o})();
-const mixw=h=>'#'+[1,3,5].map(i=>Math.round(parseInt(h.substr(i,2),16)*.6+255*.4).toString(16).padStart(2,'0')).join('');
-const ART={
-monstera:['Monstera','#e6eed9','blush',bg=>{const sl=`<path d="M36 -22L17 -20M34 -38L15 -34M28 -52L12 -46M-36 -22L-17 -20M-34 -38L-15 -34M-28 -52L-12 -46" stroke="${mixw(bg)}" stroke-width="3.2" stroke-linecap="round" fill="none"/>`;return ST('M100 118Q84 108 72 98M100 118Q116 104 120 94M102 118Q126 118 146 108','#4a8a55',3)+LF('mon',GD,72,98,-36,1,sl)+LF('mon',GC,120,94,10,.95,sl)+LF('mon',GB,146,108,52,.72,sl)}],
-pothos:['Pothos','#f6e0d0','blobs',()=>vine(GE,GB,1)],
-philodendron:['Heartleaf philodendron','#e6eed9','dots',()=>vine(GD,GC,.85)],
-arrow:['Arrowhead','#e0ebe6','rib',()=>{const vn='<path d="M0 -4V-54M0 -14L-9 -22M0 -14L9 -22M0 -28L-8 -36M0 -28L8 -36" stroke="#d3e8cf" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-opacity=".85" vector-effect="non-scaling-stroke"/>',lf=(x,y,a,c,s='.75 .95')=>LF('arrow',c,x,y,a,s,vn),pl=['#eaf3c4','#cfe29b'];return[ST('M100 118Q78 108 66 82M100 118Q100 96 104 72M100 118Q124 104 136 78M100 118Q128 116 146 106M100 118Q78 116 58 106','#6b5a4a',2.2)+lf(66,82,-30,GD)+lf(104,72,-4,GC)+lf(136,78,28,pl)+lf(146,106,64,GD,'.7 .9')+lf(58,106,-66,GC,'.65 .85'),lf(92,120,176,GD,'.6 .8')]}],
-schefflera:['Umbrella plant','#e3ecd6','weave',()=>{const wh=(x,y,t,s,c,n=7)=>{let o='';for(let i=0;i<n;i++){const a=t-78+156*i/(n-1),r=a*Math.PI/180;o+=LF('oval',c,(x+Math.sin(r)*8).toFixed(1),(y-Math.cos(r)*8).toFixed(1),a,`${s*.62} ${s}`)}return o},D=['#2f6b4a','#235540'],M=['#3f7d58','#2f6b4a'],N=['#8fc47a','#6fae5a'];return ST('M100 118C98 98 108 84 106 66C104 52 108 48 108 44','#8a7358',5)+ST('M104 88L78 80','#7a9a5a',2.5)+ST('M107 76L134 92','#7a9a5a',2.5)+ST('M105 60L82 60','#7a9a5a',2.5)+wh(76,80,-8,.58,D)+wh(136,92,12,.58,M)+wh(82,60,-6,.55,D)+wh(108,44,0,.52,N)+wh(98,106,-10,.45,D,5)}],
-chinese:['Chinese evergreen','#f6e0d0','check',()=>{const sp=spk+'<path d="M0 -4V-52" stroke="#e9f0c8" stroke-width="1.4" fill="none" vector-effect="non-scaling-stroke"/>',lf=(x,y,a,sx,sy,c)=>LF('oval',c,x,y,a,`${sx} ${sy}`,sp);return ST('M100 118V84','#a9cf8a',7)+lf(98,98,-72,.75,1,GC)+lf(98,92,-30,.85,1.25,GD)+lf(102,90,34,.85,1.2,GD)+lf(104,104,64,.8,1,GC)+LF('spathe',['#f6f2d2','#e2dcb4'],100,88,3,.8)+lf(100,84,4,.8,1.1,GD)}],
-snake:['Snake plant','#f3ead6','olive',()=>{const mt=[[-6,-14,2.2],[5,-22,1.8],[-4,-30,2.4],[6,-38,1.6],[-6,-46,1.8],[3,-54,2],[2,-12,1.6],[-5,-38,1.4]].map(([x,y,r])=>`<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r*.6}" fill="#9fd08a" opacity=".6" transform="rotate(${x*9} ${x} ${y})"/>`).join('');return fan(100,118,'oval',[[-60,'.8 .85',GC],[62,'.75 .8',GC],[-34,'.9 1',GD],[36,'.85 .95',GD],[-10,'.95 1.05',GC],[14,'.9 1',GB]],mt)}],
-spider:['Spider plant','#f6e0d0','daisy',()=>[[-62,80],[62,80],[-40,110],[40,110],[-18,96],[18,96]].map(([dx,h])=>{const d=`M100 118Q${100+dx*.4} ${118-h} ${100+dx} ${118-h*.5}`;return ST(d,'#7fc06c',9)+`<path d="${d}" fill="none" stroke="#eaf5d6" stroke-width="2.4" stroke-linecap="round"/>`}).join('')],
-peace:['Peace lily','#efe2ea','scallop',()=>{const sp='<ellipse cx="0" cy="-14" rx="2.6" ry="8" fill="#e8c55a"/>';return fan(100,118,'oval',[[-50,.75,GD],[50,.75,GD],[-26,.9,GC],[26,.9,GC],[0,.85,GD]])+ST('M100 118Q94 92 86 62M100 118Q108 96 122 70','#6fae78',3)+LF('spathe',['#fffaf0','#ece2cb'],86,64,-10,1.15,sp)+LF('spathe',['#fffaf0','#ece2cb'],122,72,14,1.05,sp)}],
-calathea:['Calathea','#efe2ea','dash',()=>{const ex='<path d="M0 -14L-11 -22M0 -14L11 -22M0 -26L-12 -34M0 -26L12 -34M0 -38L-9 -44M0 -38L9 -44" stroke="#f4b6c2" stroke-width="2" stroke-linecap="round" fill="none"/>';return ST('M100 118Q84 104 78 86M100 118V74M100 118Q116 104 124 86','#6a8a5a',3)+LF('oval',GD,78,88,-18,.95,ex)+LF('oval',GC,124,88,18,.95,ex)+LF('oval',GB,100,76,0,1,ex)}],
-zz:['ZZ plant','#e0ebe6','mist',()=>pairs(100,118,64,54,4,'jade',GC,1.7,50,false)+pairs(100,118,136,56,4,'jade',GC,1.7,50,false)+pairs(100,118,100,42,4,'jade',GD,1.8,50,false)],
-rubber:['Rubber plant','#f4e3e3','stripe',()=>pairs(100,118,100,62,3,'oval',['#2f6a4a','#24523a'],.75,62,true,'#7a5a4a',4)],
-fiddle:['Fiddle leaf fig','#f3ead6','speck',()=>pairs(100,118,100,68,3,'fig',['#86c060','#68a448'],.78,55,true,'#8a7a5a',4)],
-peperomia:['Peperomia / Pilea','#e0ebe6','dots',()=>{const p=[[70,84],[100,64],[130,84],[84,100],[118,100]];return p.map(([x,y])=>ST(`M100 118Q${(100+x)/2} ${(118+y)/2-8} ${x} ${y}`,'#7aa86a',2.5)).join('')+p.map(([x,y],i)=>LF('round',i%2?GB:GA,x,y,(x-100)/2,1.1)).join('')}],
-bird:['Bird of paradise','#f6e0d0','plain',()=>{const p=[[60,98,-26],[140,98,26],[76,84,-12],[124,82,12],[100,70,0]];return p.map(([x,y])=>ST(`M100 118L${x} ${y}`,'#6fae78',3)).join('')+p.map(([x,y,a])=>LF('oval',GC,x,y,a,.85)).join('')}],
-dracaena:['Dragon tree','#e0ebe6','zig',()=>ST('M100 118V72M100 102Q118 94 126 82','#8a7358',6)+fan(100,74,'blade',[[-62,.6,GD],[-34,.75,GC],[0,.8,GB],[34,.75,GC],[62,.6,GD]])+fan(126,84,'blade',[[-40,.5,GC],[0,.6,GB],[44,.5,GD]])],
-palm:['Palm','#e0ebe6','stripe',()=>pairs(100,118,56,50,6,'blade',GC,.28,60,false,'#4a7a50')+pairs(100,118,144,52,6,'blade',GC,.28,60,false,'#4a7a50')+pairs(100,118,100,28,7,'blade',GB,.3,60,false,'#4a7a50')],
-fern:['Fern','#f3ead6','grid',()=>[[40,98],[160,98],[54,66],[146,66],[100,48]].map(([x,y],i)=>pairs(100,118,x,y,4,'oval',i%2?GE:GA,.3,65,false,'#6a9a60',2.5)).join('')],
-aloe:['Aloe vera','#e0ebe6','plain',()=>fan(100,118,'spear',[[-62,.8,['#7fc0a0','#5da584']],[62,.8,['#7fc0a0','#5da584']],[-36,1,['#8fcaa8','#6cb08f']],[36,1,['#8fcaa8','#6cb08f']],[-12,1.1,['#7fc0a0','#5da584']],[12,1.1,['#8fcaa8','#6cb08f']]],[[-3,-16],[3,-30],[-2,-44]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.8" fill="#eaf6ea"/>`).join(''))],
-haworthia:['Haworthia','#f3ead6','grid',()=>fan(100,118,'spear',[[-60,.6,GD],[60,.6,GD],[-36,.8,GC],[36,.8,GC],[-14,.9,GB],[14,.9,GB],[0,.75,GA]],[[-3,-14],[3,-26],[-2,-38]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="3" ry="1.4" fill="#fff" opacity=".7"/>`).join(''))],
-echetall:['Tall echeveria','#e6eed9','navy',()=>{const pal=t=>t<.34?['#5fae6a','#438f58']:t<.68?['#86c46a','#68a852']:['#b7e07e','#98c860'],dr=['#d9b55a','#bf9a43'];let o='<path d="M100 36L74 114H126Z" fill="#5fae6a"/><path d="M100 36L88 76H112Z" fill="#9fd070"/>'+LF('rp',dr,93,112,-84,1.3)+LF('rp',dr,107,112,84,1.3);for(let i=0;i<7;i++){const t=i/6,y=112-i*9,a=80-t*62,s=1.3-t*.5,c=pal(i%2?Math.min(1,t+.22):t);o+=LF('rp',c,96,y,-a,`${s*1.12} ${s}`)+LF('rp',c,104,y,a,`${s*1.12} ${s}`)+(i>1?LF('rp',c,100,y-1,0,s*.85):'')}return o+LF('rp',pal(1),100,56,0,.9)+LF('rp',pal(1),99,57,-16,.7)+LF('rp',pal(1),101,57,16,.7)}],
-echeveria:['Echeveria','#e6eed9','daisy',()=>rose(100,84,48,[['#8cc7b4','#68ab98'],['#a2d3c0','#7cbba7'],['#b8dfcd','#93c8b4'],['#d0ebdc','#aed6c2']],10)+'<circle cx="100" cy="84" r="4.5" fill="#e9f5e4"/>'],
-sempervivum:['Hens & chicks','#f4e3e3','scallop',()=>rose(100,86,46,[['#b87d86','#96606c'],['#c99aa0','#aa7a84'],['#d9b4b4','#c09494'],['#e6c9c0','#d1aaa0']],10)+rose(48,132,15,[['#b87d86','#96606c'],['#d9b4b4','#c09494']],8)+rose(152,130,15,[['#b87d86','#96606c'],['#d9b4b4','#c09494']],8)],
-agave:['Agave','#e0ebe6','blobs',()=>fan(100,118,'spear',[[-70,1,['#9cc3be','#7aa5a0']],[70,1,['#9cc3be','#7aa5a0']],[-46,1.2,['#8fb9b4','#6e9a96']],[46,1.2,['#8fb9b4','#6e9a96']],[-22,1.3,['#9cc3be','#7aa5a0']],[22,1.3,['#9cc3be','#7aa5a0']],[0,1.35,['#a9ccc7','#86aeaa']]])],
-ghost:['Ghost plant','#efe2ea','wave',()=>{const c0=['#9ec3bc','#7ea8a2'],c1=['#a9ccc2','#88b0a6'],c2=['#c3dccb','#a8c8b4'],gr=(cx,cy,r,rot)=>{let o='';for(let j=0;j<7;j++)o+=LF('spat',j%2?c0:c1,cx,cy,rot+j*360/7,`${r/34*.78} ${r/34}`);for(let j=0;j<5;j++)o+=LF('spat',c2,cx,cy,rot+30+j*72,`${r/34*.4} ${r/34*.5}`);return o+`<circle cx="${cx}" cy="${cy}" r="3" fill="#cfe5cf"/>`};return ST('M100 118Q78 114 60 98Q48 88 42 96','#b3a283',7)+ST('M100 118Q96 94 94 74','#b3a283',7)+ST('M100 118Q124 108 138 94Q146 86 154 84','#b3a283',7)+gr(42,90,26,10)+gr(94,60,28,0)+gr(154,78,26,20)}],
-jade:['Jade plant','#f6e0d0','mist',()=>{let o=ST('M100 118V84M100 104Q84 96 76 78M100 104Q116 96 126 76','#8a7a5a',5);[[100,80],[76,76],[126,74],[100,64]].forEach(([x,y])=>{for(let i=0;i<6;i++)o+=LF('jade',i%2?GB:GC,x,y,i*60,1.15)});return o}],
-pearls:['String of pearls','#e6eed9','daisy',()=>{let m='';for(let i=0;i<18;i++){const X=(100+Math.cos(i*2.4)*(8+i*1.5)).toFixed(1),Y=(104+Math.sin(i*2.4)*(6+i*.9)).toFixed(1);m+=`<circle cx="${X}" cy="${Y}" r="6" fill="#9ccc86"/><circle cx="${X-2}" cy="${Y-2}" r="2" fill="#fff" opacity=".4"/>`}return[m,pearls(68,120,50,140,54,180,8,5.2)+pearls(132,120,150,138,146,178,8,5.2)]}],
-cactus:['Cactus','#f6e0d0','speck',()=>col(72,82,11,CAC)+col(128,88,10,CAC)+col(100,48,14,CAC)],
-barrel:['Barrel cactus','#f3ead6','stripe',()=>`<path d="M100 64C80 64 62 80 66 112H100Z" fill="${CAC[1]}"/><path d="M100 64C120 64 138 80 134 112H100Z" fill="${CAC[0]}"/><path d="M100 66V112M84 68Q76 90 80 112M116 68Q124 90 120 112" stroke="#1f4d38" stroke-opacity=".25" stroke-width="1.4" fill="none"/>`+[[84,86],[100,80],[116,86],[92,100],[108,100]].map(([x,y])=>`<path d="M${x-3} ${y}h6M${x} ${y-3}v6" stroke="#f3ead6" stroke-width="1.6" stroke-linecap="round"/>`).join('')+'<g fill="#f08aa6"><circle cx="96" cy="62" r="4"/><circle cx="104" cy="62" r="4"/><circle cx="100" cy="57" r="4"/></g><circle cx="100" cy="62" r="2.2" fill="#f7d36a"/>'],
-pear:['Prickly pear','#e6eed9','daisy',()=>{const d=[[-8,-14],[8,-22],[-6,-32],[6,-38]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.8" fill="#f6e9c8"/>`).join(''),P=['#6fb3a4','#4f9486'];return LF('pad',P,100,118,0,1.15,d)+LF('pad',['#7fc1b2','#5ea394'],100,70,-38,.85,d)+LF('pad',['#7fc1b2','#5ea394'],100,70,36,.8,d)}]
-};
+/* ===== Leafy drawing library: illustrated images in /art ===== */
+const ART={monstera:'Monstera',pothos:'Pothos',philodendron:'Heartleaf philodendron',arrow:'Arrowhead',schefflera:'Umbrella plant',chinese:'Chinese evergreen',aglaonema:'Aglaonema',snake:'Snake plant',spider:'Spider plant',peace:'Peace lily',calathea:'Calathea',zz:'ZZ plant',rubber:'Rubber plant',fiddle:'Fiddle leaf fig',peperomia:'Peperomia / Pilea',bird:'Bird of paradise',dracaena:'Dragon tree',palm:'Palm',aloe:'Aloe vera',haworthia:'Haworthia',echeveria:'Echeveria',sempervivum:'Hens & chicks',agave:'Agave',ghost:'Ghost plant',pearls:'String of pearls',barrel:'Barrel cactus',pear:'Prickly pear'};
 const LIB=Object.keys(ART);
-const KINDS=[['monstera',/monstera|swiss cheese/],['pothos',/pothos|epipremnum|devil/],['philodendron',/philodendron/],['arrow',/syngonium|arrowhead|nephthytis/],['chinese',/aglaonema|chinese evergreen|dieffenbachia|dumb cane/],['schefflera',/schefflera|umbrella/],['echetall',/agavoides|tall echeveria|stretched/],['snake',/sansevieria|trifasciata|snake plant|mother.?in.?law/],['spider',/spider plant|chlorophytum/],['peace',/peace lily|spathiphyllum/],['calathea',/calathea|prayer plant|maranta|ctenanthe/],['zz',/\bzz\b|zamioculcas|zanzibar/],['rubber',/rubber|ficus elastica/],['fiddle',/fiddle|ficus lyrata/],['peperomia',/peperomia|pilea|chinese money|watermelon/],['bird',/bird of paradise|strelitzia/],['dracaena',/dracaena|dragon tree|corn plant|marginata/],['palm',/palm|areca|kentia|howea/],['fern',/fern|nephrolepis/],['aloe',/aloe/],['agave',/agave|century plant/],['haworthia',/haworthia|zebra plant/],['sempervivum',/hens|chicks|sempervivum|houseleek/],['echeveria',/echeveria|rosette/],['ghost',/graptopetalum|ghost plant/],['jade',/jade|crassula/],['pearls',/pearls|senecio rowleyanus/],['barrel',/barrel|echinocactus|golden ball|mammillaria/],['pear',/prickly pear|opuntia|bunny ear/],['cactus',/cact|cereus|euphorbia/]];
-const draw=k=>{const[,bg,pk,f]=ART[k],b=f(bg),a=Array.isArray(b);return`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="${bg}"/><circle cx="100" cy="112" r="80" fill="#fff" opacity=".4"/>${a?b[0]:b}${pot(PT[pk])}${a?b[1]:''}</svg>`};
-const FB=['peperomia','zz','aloe','pothos','rubber','jade'];
-function gen(name,species){const s=((name||'')+' '+(species||'')).toLowerCase(),k=KINDS.find(x=>x[1].test(s));if(k)return draw(k[0]);let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return draw(FB[h%FB.length])}
+const KINDS=[['monstera',/monstera|swiss cheese/],['pothos',/pothos|epipremnum|devil/],['philodendron',/philodendron/],['arrow',/syngonium|arrowhead|nephthytis/],['aglaonema',/aglaonema/],['chinese',/chinese evergreen|dieffenbachia|dumb cane/],['snake',/sansevieria|trifasciata|snake plant|mother.?in.?law/],['spider',/spider plant|chlorophytum/],['peace',/peace lily|spathiphyllum/],['calathea',/calathea|prayer plant|maranta|ctenanthe/],['zz',/\bzz\b|zamioculcas|zanzibar/],['rubber',/rubber|ficus elastica/],['fiddle',/fiddle|ficus lyrata/],['peperomia',/peperomia|pilea|chinese money|watermelon/],['bird',/bird of paradise|strelitzia/],['schefflera',/schefflera|umbrella/],['dracaena',/dracaena|dragon tree|corn plant|marginata/],['palm',/palm|areca|kentia|howea|fern|nephrolepis/],['aloe',/aloe/],['agave',/agave|century plant/],['haworthia',/haworthia|zebra plant/],['sempervivum',/hens|chicks|sempervivum|houseleek/],['echeveria',/echeveria|rosette|agavoides/],['ghost',/graptopetalum|ghost plant|jade|crassula/],['pearls',/pearls|senecio rowleyanus/],['pear',/prickly pear|opuntia|bunny ear/],['barrel',/barrel|echinocactus|golden ball|mammillaria|cact|cereus|euphorbia/]];
+const FB=['peperomia','zz','aloe','pothos','rubber','philodendron'];
+const artUrl=k=>`art/${k}.webp`;
+function gen(name,species){const s=((name||'')+' '+(species||'')).toLowerCase(),k=KINDS.find(x=>x[1].test(s));if(k)return k[0];let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return FB[h%FB.length]}
 
 const $=s=>document.querySelector(s);
 const SUN=['Low light','Bright indirect','Partial sun','Full sun'];
@@ -183,13 +120,14 @@ const fmt=n=>new Date(n*864e5).toLocaleDateString(undefined,{weekday:'short',mon
 const lastW=p=>p.log.length?p.log[p.log.length-1]:p.added;
 const until=p=>dn(lastW(p))+p.every-dn(today());
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const pic=(p,c='pic')=>`<div class="${c}">${p.svg?`<img alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(p.svg)}">`:''}</div>`;
+const img=p=>p.art?`<img alt="" src="${artUrl(p.art)}">`:p.svg?`<img alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(p.svg)}">`:'';
+const pic=(p,c='pic')=>`<div class="${c}">${img(p)}</div>`;
 const DROP='<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c3.6 4.4 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.4-6.6 6-11z"/></svg>';
 
 function status(p){const u=until(p);return u<0?[`${-u}d late`,'late']:u==0?['Today','soon']:u==1?['Tomorrow','soon']:[`In ${u}d`,'']}
 function render(){
  const el=$('#list');
- if(!plants.length){el.innerHTML=`<div class="empty">${pic({svg:gen('Monstera')})}No plants yet.<br>Tap + to add your first one.</div>`;return}
+ if(!plants.length){el.innerHTML=`<div class="empty">${pic({art:'monstera'})}No plants yet.<br>Tap + to add your first one.</div>`;return}
  const row=p=>{const[t,c]=status(p);return`<div class="card" data-id="${p.id}">${pic(p)}<div class="info"><b>${esc(p.name)}</b><div class="meta">${esc(p.sun)} · every ${p.every}d</div></div><span class="pill ${c}">${t}</span><button class="drop ${until(p)<=0?'due':''}" data-w="${p.id}" aria-label="Water ${esc(p.name)}">${DROP}</button></div>`};
  const s=[...plants].sort((a,b)=>until(a)-until(b)),due=s.filter(p=>until(p)<=0),later=s.filter(p=>until(p)>0);
  el.innerHTML=(due.length?`<div class="sec">Needs water · ${due.length}</div>`+due.map(row).join(''):'')+(later.length?`<div class="sec">${due.length?'Later':'All plants'} · ${later.length}</div>`+later.map(row).join(''):'');
@@ -201,28 +139,25 @@ let tt;function toast(m,undo){const t=$('#toast');t.innerHTML=esc(m)+(undo?'<but
 const PROMPT=`Analyze the plant in my photo and make me a Leafy plant file.
 Create a downloadable file named leafy-<plant-name>.json. If you can't create files, reply with only the JSON in one code block.
 Use exactly this structure:
-{"leafy":1,"name":"common name","species":"scientific name","sun":"Low light | Bright indirect | Partial sun | Full sun","waterDays":7,"age":"best guess, e.g. About 2 years","analysis":"2-4 sentences on what it is and how it looks, including its health and any problems","tips":["4-6 short care tips"],"svg":"<svg ...>"}
-Rules: sun must be exactly one of the four options. waterDays is a whole number of days between waterings for a typical home. For svg, draw a flat vector illustration of this plant in a patterned planter, in the style of modern flat botanical stickers: no outlines and no face, a soft pastel beige or sage background with a lighter circle behind the plant, leaves drawn in two tones (one half of each leaf lighter, the other half darker, with a thin darker midrib line), muted greens, and a pastel or terracotta planter with a simple pattern such as stripes, dots, daisies, a grid or zigzags. viewBox 0 0 200 200, planter centered at the bottom, no text, no scripts, no images, under 4000 characters. Use single quotes for all SVG attributes so the JSON stays valid.`;
+{"leafy":1,"name":"common name","species":"scientific name","sun":"Low light | Bright indirect | Partial sun | Full sun","waterDays":7,"age":"best guess, e.g. About 2 years","analysis":"2-4 sentences on what it is and how it looks, including its health and any problems","tips":["4-6 short care tips"],"drawing":"${LIB.join(' | ')}"}
+Rules: sun must be exactly one of the four options. waterDays is a whole number of days between waterings for a typical home. drawing must be the single closest match from that list (the app already has the pictures, so do not draw anything).`;
 function parsePlant(t){
  const m=String(t).match(/\{[\s\S]*\}/);if(!m)throw 0;
  const o=JSON.parse(m[0]);if(!o||!o.name)throw 0;
  const s=String(o.sun||'').toLowerCase();
  const sun=SUN.find(x=>x.toLowerCase()==s)||(/low|shade/.test(s)?'Low light':/part/.test(s)?'Partial sun':/full|direct/.test(s)&&!/indirect/.test(s)?'Full sun':'Bright indirect');
- const sm=typeof o.svg=='string'&&o.svg.match(/<svg[\s\S]*<\/svg>/i);
- let svg=sm?sm[0].replace(/<script[\s\S]*?<\/script>/gi,'').replace(/\son\w+\s*=\s*("[^"]*"|'[^']*')/gi,''):'';
- if(svg&&!/xmlns=/.test(svg))svg=svg.replace('<svg','<svg xmlns="http://www.w3.org/2000/svg"');
- if(!svg)svg=gen(o.name,o.species);
- return{id:Date.now()+Math.floor(Math.random()*1e3),name:String(o.name),species:String(o.species||''),sun,every:Math.max(1,Math.min(90,Math.round(+o.waterDays)||7)),age:String(o.age||''),analysis:String(o.analysis||''),tips:Array.isArray(o.tips)?o.tips.join('\n'):String(o.tips||''),svg,added:today(),log:[]}}
+ const art=LIB.includes(String(o.drawing||'').toLowerCase())?String(o.drawing).toLowerCase():gen(o.name,o.species);
+ return{id:Date.now()+Math.floor(Math.random()*1e3),name:String(o.name),species:String(o.species||''),sun,every:Math.max(1,Math.min(90,Math.round(+o.waterDays)||7)),age:String(o.age||''),analysis:String(o.analysis||''),tips:Array.isArray(o.tips)?o.tips.join('\n'):String(o.tips||''),art,added:today(),log:[]}}
 
 let cur;
 const close=()=>$('#ov').classList.remove('on');
 const say=t=>{const m=$('#msg');if(m)m.textContent=t};
 function openSheet(p,draft){
  const nw=!p||!!draft;
- cur=draft?{...draft}:p?{...p,log:[...p.log]}:{id:Date.now(),name:'',species:'',sun:'Bright indirect',every:7,age:'',analysis:'',tips:'',svg:'',added:today(),log:[]};
+ cur=draft?{...draft}:p?{...p,log:[...p.log]}:{id:Date.now(),name:'',species:'',sun:'Bright indirect',every:7,age:'',analysis:'',tips:'',art:'',added:today(),log:[]};
  if(cur.tips==null)cur.tips=cur.notes||'';
  $('#sheet').innerHTML=`<div class="grab"></div>
- <div class="hd"><div class="pic edit" id="pv">${cur.svg?`<img alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(cur.svg)}">`:''}</div><div style="flex:1"><label class="l">Name</label><input id="nm" class="nm" value="${esc(cur.name)}" placeholder="e.g. Monstera"></div></div>
+ <div class="hd"><div class="pic edit" id="pv">${img(cur)}</div><div style="flex:1"><label class="l">Name</label><input id="nm" class="nm" value="${esc(cur.name)}" placeholder="e.g. Monstera"></div></div>
  ${nw?`<div class="imp"><label class="b" for="fi">Import file</label><input class="vh" type="file" id="fi" multiple><button class="b" id="ps">Paste</button><button class="b" id="cp">Copy prompt</button></div><div id="pz"></div>`:''}
  <div class="msg" id="msg"></div>
  <div class="g2"><div><label class="l">Sun</label><select id="sn">${SUN.map(s=>`<option${s==cur.sun?' selected':''}>${s}</option>`).join('')}</select></div>
@@ -236,11 +171,11 @@ function openSheet(p,draft){
  $('#ov').classList.add('on');
  if(draft)say('Imported! Check the details, then Save.');
  $('#pv').onclick=openLib;$('#cn').onclick=close;
- cur.hand=!!cur.svg;
- const live=()=>{if(!cur.hand){const n=$('#nm').value.trim();cur.svg=n?gen(n,$('#sp').value):'';$('#pv').innerHTML=cur.svg?`<img alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(cur.svg)}">`:''}};
+ cur.hand=!!(cur.art||cur.svg);
+ const live=()=>{if(!cur.hand){const n=$('#nm').value.trim();cur.art=n?gen(n,$('#sp').value):'';delete cur.svg;$('#pv').innerHTML=img(cur)}};
  $('#nm').oninput=live;$('#sp').oninput=live;
  $('#sv').onclick=()=>{cur.name=$('#nm').value.trim()||'Unnamed plant';cur.species=$('#sp').value.trim();cur.sun=$('#sn').value;cur.every=Math.max(1,parseInt($('#ev').value)||7);cur.age=$('#ag').value.trim();cur.analysis=$('#an').value;cur.tips=$('#nt').value;delete cur.notes;delete cur.hand;
-  if(!cur.svg)cur.svg=gen(cur.name,cur.species);
+  if(!cur.art){cur.art=gen(cur.name,cur.species)}delete cur.svg;
   const i=plants.findIndex(x=>x.id==cur.id);i<0?plants.push(cur):plants[i]=cur;save();close();render()};
  if(!nw)$('#dl').onclick=()=>{if(confirm('Delete this plant?')){plants=plants.filter(x=>x.id!=cur.id);save();close();render()}};
  if(nw){
@@ -254,10 +189,10 @@ function openSheet(p,draft){
  }
 }
 function openLib(){
- const tile=(k,n,svg)=>`<div class="lt" data-k="${k}">${svg?pic({svg}):'<div class="pic">✨</div>'}${n}</div>`;
- $('#libs').innerHTML=`<div class="grab"></div><h2>Choose a drawing</h2><div class="lg">${tile('auto','Match name')}${LIB.map(k=>tile(k,ART[k][0],draw(k))).join('')}</div>`;
+ const tile=(k,n)=>`<div class="lt" data-k="${k}">${k=='auto'?'<div class="pic">✨</div>':pic({art:k})}${n}</div>`;
+ $('#libs').innerHTML=`<div class="grab"></div><h2>Choose a drawing</h2><div class="lg">${tile('auto','Match name')}${LIB.map(k=>tile(k,ART[k])).join('')}</div>`;
  $('#lib').classList.add('on');
- $('#libs').querySelectorAll('.lt').forEach(t=>t.onclick=()=>{const k=t.dataset.k;cur.hand=k!='auto';cur.svg=k=='auto'?gen($('#nm').value,$('#sp').value):draw(k);$('#pv').innerHTML=`<img alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(cur.svg)}">`;$('#lib').classList.remove('on')});
+ $('#libs').querySelectorAll('.lt').forEach(t=>t.onclick=()=>{const k=t.dataset.k;cur.hand=k!='auto';cur.art=k=='auto'?gen($('#nm').value,$('#sp').value):k;delete cur.svg;$('#pv').innerHTML=img(cur);$('#lib').classList.remove('on')});
 }
 $('#lib').onclick=e=>{if(e.target.id=='lib')$('#lib').classList.remove('on')};
 $('#ov').onclick=e=>{if(e.target.id=='ov')close()};
@@ -275,6 +210,7 @@ const isDark=()=>{const a=document.documentElement.dataset.theme;return a?a=='da
 const th=ld('leafy.theme','');if(th)document.documentElement.dataset.theme=th;
 const paint=()=>{$('#thm').innerHTML=isDark()?SUNI:MOON;document.querySelector('meta[name=theme-color]').content=isDark()?'#161d18':'#f6f0e3'};
 $('#thm').onclick=()=>{const n=isDark()?'light':'dark';document.documentElement.dataset.theme=n;sv('leafy.theme',n);paint()};
+{let mg=false;plants.forEach(q=>{if(!q.art){q.art=gen(q.name,q.species);delete q.svg;mg=true}});if(mg)save()}
 paint();render();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
