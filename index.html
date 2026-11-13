@@ -17,8 +17,9 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.35 ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,sans-serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 input,textarea{-webkit-user-select:text;user-select:text}
-main{max-width:620px;margin:0 auto;padding:6px 18px 170px}
-header{display:flex;align-items:center;justify-content:space-between;margin:10px 2px 22px}
+main{max-width:620px;margin:0 auto;padding:6px 0 170px;overflow-x:hidden}
+.pager{display:flex;width:200%;align-items:flex-start;will-change:transform}.pane{width:50%;flex:none;padding:0 18px}.pane.off{visibility:hidden;height:0;overflow:hidden}
+header{display:flex;align-items:center;justify-content:space-between;margin:10px 20px 22px}
 h1{margin:0;font-size:30px;letter-spacing:-.8px;font-weight:800}
 .chip{display:none;align-items:center;gap:5px;background:var(--gs);color:var(--g);font-weight:800;font-size:13px;padding:6px 12px 6px 9px;border-radius:99px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 16px}
@@ -44,7 +45,7 @@ footer span{pointer-events:auto;padding:8px 16px;cursor:pointer;display:inline-b
 .toast{position:fixed;left:50%;bottom:calc(104px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);border-radius:14px;padding:6px 6px 6px 14px;font-size:13.5px;font-weight:700;opacity:0;pointer-events:none;transition:.2s;white-space:nowrap;z-index:60;display:flex;align-items:center;gap:8px}
 .toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.toast button{background:transparent;color:var(--gs);padding:6px 10px;font-size:13.5px}
 .ov{position:fixed;inset:0;background:#0006;display:none;align-items:flex-end;justify-content:center;z-index:20}.ov.on{display:flex}#lib{z-index:30}
-.sheet{background:var(--bg);width:100%;max-width:620px;max-height:92%;overflow:auto;border-radius:26px 26px 0 0;padding:8px 16px 0}
+.sheet{background:var(--bg);width:100%;max-width:620px;max-height:94%;overflow:auto;border-radius:28px 28px 0 0;padding:8px 16px 0}
 .ov.on .sheet{animation:up .22s ease}@keyframes up{from{transform:translateY(40px);opacity:.6}}
 .grab{width:38px;height:4px;border-radius:9px;background:var(--line);margin:0 auto 12px}
 .sheet h2{margin:2px 0 12px;font-size:20px;font-weight:800}
@@ -68,7 +69,7 @@ summary::-webkit-details-marker{display:none}
 summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--mut);border-bottom:2px solid var(--mut);transform:rotate(45deg);transition:.15s;margin-right:4px}
 details[open] summary::after{transform:rotate(-135deg)}summary i{font-style:normal;color:var(--mut);font-weight:700;margin-left:auto;margin-right:12px;font-size:13px}
 details textarea{margin-bottom:12px}
-.log{list-style:none;padding:0;margin:0 0 12px;max-height:150px;overflow:auto}.log li{display:flex;justify-content:space-between;align-items:center;padding:2px 2px;font-size:13.5px;color:var(--mut)}.lx{width:34px;height:34px;padding:0;border-radius:50%;background:transparent;color:var(--bad);font-size:22px;line-height:1}
+.log{list-style:none;padding:0;margin:0 0 12px;max-height:150px;overflow:auto}.log li{display:flex;justify-content:space-between;align-items:center;padding:2px 2px;font-size:13.5px;color:var(--mut)}.lx{width:34px;height:34px;padding:0;border-radius:50%;background:transparent;color:var(--mut);display:grid;place-items:center}.lx svg{width:15px;height:15px}.lx:active{color:var(--bad);background:var(--sand)}
 .ft{position:sticky;bottom:0;display:flex;gap:8px;padding:10px 0 calc(14px + env(safe-area-inset-bottom,0px));background:var(--bg);margin-top:6px}
 .ft button{flex:1}.ft #sv{flex:2}
 .lg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
@@ -85,7 +86,8 @@ details textarea{margin-bottom:12px}
 .si{position:absolute;top:-6px;right:-6px;width:27px;height:27px;border-radius:50%;background:var(--card);color:rgb(var(--lc));display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.22);z-index:2}.si svg{width:15px;height:15px}
 body[data-tab=cal] .fab{display:none}
 .dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(32px + env(safe-area-inset-bottom,0px));display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:5px;box-shadow:0 8px 26px rgba(0,0,0,.2);z-index:15}
-.dock button{display:flex;flex-direction:column;align-items:center;gap:2px;width:96px;padding:7px 0 6px;border-radius:17px;background:transparent;color:var(--mut);font-size:11px;font-weight:800}.dock button.on{background:var(--gs);color:var(--g)}.dock svg{width:22px;height:22px}
+.dock{position:fixed}.dock .ind{position:absolute;left:5px;top:5px;bottom:5px;width:96px;border-radius:17px;background:var(--gs);will-change:transform}
+.dock button{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:2px;width:96px;padding:7px 0 6px;border-radius:17px;background:transparent;color:var(--mut);font-size:11px;font-weight:800;transition:color .25s}.dock button.on{color:var(--g)}.dock svg{width:22px;height:22px}
 .ch{display:flex;align-items:center;justify-content:space-between;margin:0 2px 14px}.ch b{font-size:21px;font-weight:800;letter-spacing:-.3px}
 .cn{display:flex;gap:6px}.cn button{height:36px;min-width:36px;padding:0 10px;border-radius:12px;background:var(--sand);color:var(--ink);display:grid;place-items:center;font-size:12.5px}.cn svg{width:18px;height:18px}
 .wd{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}.wd span{text-align:center;font-size:11px;font-weight:800;color:var(--mut)}
@@ -98,6 +100,32 @@ body[data-tab=cal] .fab{display:none}
 .m.done{opacity:.38}.m.late{box-shadow:0 0 0 1.5px var(--bad)}.m.more{display:grid;place-items:center;font-size:9px;font-weight:800;color:var(--mut);background:var(--sand)}
 .lg2{font-size:11.5px;color:var(--mut);font-weight:700;margin:12px 4px 0;text-align:center}
 .dr{display:flex;align-items:center;gap:11px;padding:7px 0;cursor:pointer}.dr .pic{width:42px;height:42px;border-radius:14px}.dr b{display:block;font-size:14px}.dr small{font-size:12px;color:var(--mut);font-weight:700}.dr small.late{color:var(--bad)}
+/* plant profile */
+.hero{position:relative;margin:-8px -16px 0;padding:8px 16px 4px;text-align:center;background:linear-gradient(180deg,var(--hc,var(--gs)) 0%,transparent 100%)}
+.hero .grab{background:rgba(0,0,0,.18)}
+.hero .pic{width:min(64vw,250px);height:auto;aspect-ratio:1;margin:10px auto 0;border-radius:34%;overflow:hidden;background:var(--gs);box-shadow:0 22px 38px -16px rgba(25,45,30,.55)}
+.ed{position:absolute;top:22px;right:18px;width:42px;height:42px;padding:0;border-radius:50%;display:grid;place-items:center;background:var(--card);color:var(--ink);box-shadow:0 3px 10px rgba(0,0,0,.18)}.ed svg{width:19px;height:19px}
+.pn{font-size:26px;font-weight:800;letter-spacing:-.5px;margin:18px 0 2px;line-height:1.15}.ps{color:var(--mut);font-weight:700;font-size:13.5px;min-height:18px}
+.info3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 12px}
+.it{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:11px 8px 12px;text-align:center;min-width:0}
+.it small{display:block;font-size:10.5px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+.it b{display:block;font-size:13.5px;margin-top:5px;line-height:1.25;word-break:break-word}.it .sv{display:block;color:rgb(var(--lc));margin:0 auto 2px;width:22px;height:22px}.it .sv svg{width:22px;height:22px}
+.c2{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:16px;margin-bottom:12px}
+.c2 h4{margin:0 0 10px;font-size:11.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--mut);font-weight:800}
+.c2 p{margin:0;font-size:14.5px;line-height:1.5}
+.wc{display:flex;gap:18px;align-items:center}.ring{position:relative;width:100px;height:100px;flex:none}.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .n{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05}.ring .n b{font-size:28px;font-weight:800}.ring .n small{font-size:10.5px;font-weight:800;color:var(--mut);margin-top:2px}
+.wi{flex:1;min-width:0}.wi div{font-size:13px;color:var(--mut);font-weight:700;margin:3px 0}.wi div b{color:var(--ink)}
+.wbtn{margin-top:14px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px}.wbtn svg{width:17px;height:17px}
+.tips{list-style:none;margin:0;padding:0}.tips li{display:flex;gap:11px;margin:0 0 10px;font-size:14.5px;line-height:1.45}.tips li:last-child{margin:0}.tips svg{width:18px;height:18px;color:var(--g);flex:none;margin-top:2px}
+.tlw{position:relative}.tlw::before{content:"";position:absolute;left:13px;top:18px;bottom:18px;width:2px;background:var(--line)}
+.tl{position:relative;display:flex;align-items:center;gap:12px;padding:6px 0}
+.dot{position:relative;z-index:1;width:28px;height:28px;border-radius:50%;background:var(--gs);color:var(--g);display:grid;place-items:center;flex:none;box-shadow:0 0 0 4px var(--card)}.dot svg{width:13px;height:13px}
+.tx{flex:1;min-width:0}.tx b{display:block;font-size:14px}.tx small{font-size:12px;color:var(--mut);font-weight:700}
+.gp{font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:99px;background:var(--gs);color:var(--g)}.gp.late{background:rgba(224,160,40,.2);color:var(--soon)}.gp.first{background:var(--sand);color:var(--mut)}
+.more{width:100%;margin-top:8px;padding:10px}
+.dlp{display:block;margin:6px auto calc(22px + env(safe-area-inset-bottom,0px));background:transparent;color:var(--bad);font-size:13.5px}
+.eh{font-size:11px;font-weight:800;color:var(--mut);margin:14px 0 3px 2px;text-transform:uppercase;letter-spacing:.5px}
 /* What's new pop-up */
 .pop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:50;background:rgba(0,0,0,.38);padding:22px}.pop.on{display:flex}
 .pc{background:var(--card);border-radius:24px;width:100%;max-width:330px;max-height:74vh;overflow:auto;padding:16px 18px 18px;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:pp .2s cubic-bezier(.2,.9,.3,1.15)}
@@ -114,22 +142,22 @@ body[data-tab=cal] .fab{display:none}
 </style>
 </head>
 <body>
-<main><header><h1>Leafy</h1><div class="hr2" id="hr"><div class="chip" id="chip"></div><div class="seg" id="seg"><button data-v="water" aria-label="Group by watering"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c3.6 4.4 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.4-6.6 6-11z"/></svg></button><button data-v="light" aria-label="Group by light"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" stroke="none"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" fill="none" stroke-width="2"/></svg></button></div></div></header><div id="list"></div><div id="cal" style="display:none"></div></main>
+<main><header><h1>Leafy</h1><div class="hr2" id="hr"><div class="chip" id="chip"></div><div class="seg" id="seg"><button data-v="water" aria-label="Group by watering"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c3.6 4.4 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.4-6.6 6-11z"/></svg></button><button data-v="light" aria-label="Group by light"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" stroke="none"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" fill="none" stroke-width="2"/></svg></button></div></div></header><div class="pager" id="pager"><div class="pane" id="p0"><div id="list"></div></div><div class="pane off" id="p1"><div id="cal"></div></div></div></main>
 <button class="fab" id="add" aria-label="Add plant"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
-<nav class="dock"><button data-t="plants" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19l7-7"/></svg>Plants</button><button data-t="cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Calendar</button></nav>
-<footer><span id="ver">v3.3.0</span></footer>
+<nav class="dock"><span class="ind"></span><button data-t="plants" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19l7-7"/></svg>Plants</button><button data-t="cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Calendar</button></nav>
+<footer><span id="ver">v3.4.0</span></footer>
 <div class="toast" id="toast"></div>
 <div class="pop" id="dp"><div class="pc"><div class="ph"><div><b id="dpt"></b><small id="dps"></small></div></div><div id="dpl" style="margin-top:8px"></div></div></div>
 <div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
 <div class="ov" id="lib"><div class="sheet" id="libs"></div></div>
 <div class="pop" id="wn"><div class="pc">
 <div class="ph"><div><b>What’s new</b><small id="rel"></small></div><button class="icon" id="thm" aria-label="Toggle dark or light mode"></button></div>
+<h3>v3.4.0</h3>
+<ul><li>Redesigned plant profile: bigger picture, everything on one clean screen, ring countdown and a watering timeline</li><li>Swipe left or right to switch between Plants and Calendar</li><li>Smooth sliding tab indicator</li></ul>
 <h3>v3.3.0</h3>
 <ul><li>Light level is now a small icon on each plant (tap it to see what it means)</li><li>New Calendar tab: see which days each plant needs watering</li></ul>
 <h3>v3.2.0</h3>
 <ul><li>Safer watering: tap the droplet, then tap again to confirm</li><li>Light needs on every plant, plus a Group by light view</li><li>Swipe a profile down to close it</li><li>Delete individual watering entries</li></ul>
-<h3>v3.1.0</h3>
-<ul><li>New dashboard: a rounded icon per plant with a water countdown; tap the droplet to log watering, tap the picture for details</li><li>Nicknames for plants</li><li>Google Sheet sync, edit by edit, plus Backup and Restore</li><li>Compact What’s new pop-up</li></ul>
 <div class="hr"></div>
 <h3 style="margin-top:0">Sheet sync</h3>
 <input id="surl" placeholder="Paste your Apps Script link" autocomplete="off" autocapitalize="off" spellcheck="false">
@@ -149,7 +177,7 @@ function gen(name,species){const s=((name||'')+' '+(species||'')).toLowerCase(),
 
 const $=s=>document.querySelector(s);
 const SUN=['Low light','Bright indirect','Partial sun','Full sun'];
-const REL='2026-11-11';
+const REL='2026-11-13';
 const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
@@ -189,7 +217,7 @@ function arm(b){disarm();armed=b;b.dataset.old=b.innerHTML;b.classList.add('arm'
 function disarm(){clearTimeout(armT);if(armed){armed.classList.remove('arm');if(armed.dataset.old)armed.innerHTML=armed.dataset.old;armed=null}}
 document.addEventListener('click',e=>{if(!e.target.closest('.bdg'))disarm()});
 const tile=(p,showL)=>{const st=status(p),l=LV[p.sun]||2;return`<div class="tile ${st.c}" data-id="${p.id}"><div class="ico">${img(p)}<span class="si l${l}" role="img" aria-label="${esc(p.sun)}" data-sun="${esc(p.sun)}">${sunIc(l)}</span><button class="bdg ${st.c}" data-w="${p.id}" aria-label="Log watering for ${esc(disp(p))}">${DROP}${st.t}</button></div><span class="tn">${esc(disp(p))}</span>${p.nick?`<span class="ts">${esc(p.name)}</span>`:''}</div>`};
-function render(splash){renderPlants(splash);if(tab=='cal')renderCal()}
+function render(splash){renderPlants(splash);renderCal()}
 function renderPlants(splash){
  const el=$('#list'),due=plants.filter(p=>until(p)<=0).length,chip=$('#chip');
  chip.style.display=due&&view=='water'?'flex':'none';chip.innerHTML=due?`<span style="width:14px;height:14px;display:inline-flex">${DROP}</span>${due} to water`:'';
@@ -224,11 +252,28 @@ function openDay(k){
  $('#dp').classList.add('on');
  $('#dpl').querySelectorAll('.dr').forEach(r=>r.onclick=()=>{$('#dp').classList.remove('on');openSheet(plants.find(x=>x.id==r.dataset.id))})}
 $('#dp').onclick=e=>{if(e.target.id=='dp')$('#dp').classList.remove('on')};
-function setTab(x){tab=x;document.body.dataset.tab=x;document.querySelectorAll('.dock button').forEach(b=>b.classList.toggle('on',b.dataset.t==x));$('#list').style.display=x=='plants'?'':'none';$('#cal').style.display=x=='cal'?'':'none';$('#hr').style.display=x=='plants'?'':'none';x=='cal'?renderCal():renderPlants()}
-document.querySelectorAll('.dock button').forEach(b=>b.onclick=()=>setTab(b.dataset.t));
+const pager=$('#pager'),ind=document.querySelector('.dock .ind'),dBtn=[...document.querySelectorAll('.dock button')],fabEl=$('#add'),hrEl=$('#hr');
+let prog=0,raf;
+function setProg(p){prog=p;const W=pager.offsetWidth/2,c=Math.max(0,Math.min(1,p)),s=Math.sin(Math.PI*c),dx=dBtn[1].offsetLeft-dBtn[0].offsetLeft;
+ pager.style.transform=`translateX(${-p*W}px)`;
+ ind.style.transform=`translateX(${c*dx}px) scale(${(1+.34*s).toFixed(3)},${(1-.1*s).toFixed(3)})`;
+ dBtn.forEach((b,i)=>b.classList.toggle('on',c>.5?i==1:i==0));
+ const f=Math.max(0,1-c*1.7);hrEl.style.opacity=f;fabEl.style.opacity=f;fabEl.style.transform=`scale(${.8+.2*f})`;hrEl.style.pointerEvents=fabEl.style.pointerEvents=c>.35?'none':''}
+const showBoth=()=>{$('#p0').classList.remove('off');$('#p1').classList.remove('off')};
+function settle(t){tab=t?'cal':'plants';document.body.dataset.tab=tab;$('#p0').classList.toggle('off',!!t);$('#p1').classList.toggle('off',!t);window.scrollTo(0,0)}
+function animTo(t,dur=460){cancelAnimationFrame(raf);showBoth();const s=prog,t0=performance.now();
+ const step=n=>{const k=Math.min(1,(n-t0)/dur),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;setProg(s+(t-s)*e);if(k<1)raf=requestAnimationFrame(step);else{setProg(t);settle(t)}};raf=requestAnimationFrame(step)}
+dBtn.forEach(b=>b.onclick=()=>animTo(b.dataset.t=='cal'?1:0));
+{const m=document.querySelector('main');let sx=null,sy=0,dir=0,sp=0,st=0;
+ m.addEventListener('touchstart',e=>{if(document.querySelector('.ov.on,.pop.on')||e.touches.length>1){sx=null;return}const t=e.touches[0];if(t.clientX<18||t.clientX>innerWidth-18){sx=null;return}sx=t.clientX;sy=t.clientY;dir=0;sp=prog;st=Date.now();cancelAnimationFrame(raf)},{passive:true});
+ m.addEventListener('touchmove',e=>{if(sx==null)return;const t=e.touches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(!dir){if(Math.abs(dx)>10&&Math.abs(dx)>Math.abs(dy)*1.3){dir=1;showBoth()}else if(Math.abs(dy)>10){sx=null;return}}
+  if(dir){e.preventDefault();setProg(Math.max(-.1,Math.min(1.1,sp-dx/(pager.offsetWidth/2))))}},{passive:false});
+ m.addEventListener('touchend',()=>{if(!dir){sx=null;return}const v=(prog-sp)/Math.max(1,Date.now()-st);let t=prog>.5?1:0;if(Math.abs(v)>.0011)t=v>0?1:0;dir=0;sx=null;animTo(t,380)});
+ addEventListener('resize',()=>setProg(prog))}
+settle(0);setProg(0);
 function water(p){
  const e={i:uid(),d:today(),t:Date.now()};p.log.push(e);p.u=Date.now();commit();render(p.id);
- toast(`Watered ${disp(p)}`,()=>{p.log=p.log.filter(x=>x.i!=e.i);meta.ltomb[e.i]=Date.now();p.u=Date.now();commit();render()});
+ toast(`Watered ${disp(p)}`,()=>{p.log=p.log.filter(x=>x.i!=e.i);meta.ltomb[e.i]=Date.now();p.u=Date.now();commit();render();if(viewing===p)showView(p)});
 }
 let tt;function toast(m,undo){const t=$('#toast');t.innerHTML=esc(m)+(undo?'<button id="ud">Undo</button>':'');t.classList.add('on');if(undo)$('#ud').onclick=()=>{undo();t.classList.remove('on')};clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),4000)}
 
@@ -246,45 +291,74 @@ function parsePlant(t){
  const art=LIB.includes(String(o.drawing||'').toLowerCase())?String(o.drawing).toLowerCase():gen(o.name,o.species);
  return{id:uid(),name:String(o.name),nick:String(o.nick||''),species:String(o.species||''),sun,every:Math.max(1,Math.min(90,Math.round(+o.waterDays)||7)),age:String(o.age||''),analysis:String(o.analysis||''),tips:Array.isArray(o.tips)?o.tips.join('\n'):String(o.tips||''),art,added:today(),log:[],u:Date.now()}}
 
-/* ---------- plant sheet ---------- */
-let cur;
-const close=()=>$('#ov').classList.remove('on');
+/* ---------- plant profile ---------- */
+let cur,viewing=null,allLog=false;
+const close=()=>{viewing=null;$('#ov').classList.remove('on')};
 const say=t=>{const m=$('#msg');if(m)m.textContent=t};
-function openSheet(p,draft){
- const nw=!p||!!draft;
+const PEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>';
+const LEAF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19l7-7"/></svg>';
+const tcache={};
+function tint(k,cb){if(k in tcache)return cb(tcache[k]);const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=8;const x=c.getContext('2d');x.drawImage(im,0,0,8,8);const d=x.getImageData(0,0,1,1).data;tcache[k]=`rgb(${d[0]},${d[1]},${d[2]})`}catch(e){tcache[k]=''}cb(tcache[k])};im.src=artUrl(k)}
+const fmtL=n=>new Date(n*864e5).toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'});
+const agoT=n=>n<=0?'Today':n==1?'Yesterday':`${n} days ago`;
+function viewHTML(p){
+ const u=until(p),l=LV[p.sun]||2,t=dn(today()),logs=[...p.log].sort((a,b)=>a.d<b.d?1:-1),C=2*Math.PI*40;
+ const pct=Math.max(0,Math.min(1,1-u/p.every)),col=u<0?'var(--bad)':u<=1?'var(--soon)':'var(--g)';
+ const gaps=logs.slice(0,-1).map((x,i)=>dn(x.d)-dn(logs[i+1].d)),avg=gaps.length?gaps.reduce((s,x)=>s+x,0)/gaps.length:0;
+ const tips=(p.tips||'').split('\n').map(s=>s.trim()).filter(Boolean),shown=allLog?logs:logs.slice(0,6);
+ const num=u<0?-u:u,unit=u<0?(num==1?'day late':'days late'):u==0?'due today':u==1?'day left':'days left';
+ return `<div class="hero" id="hero"><div class="grab"></div><button class="ed" id="ed" aria-label="Edit plant">${PEN}</button><div class="pic">${img(p)}</div><div class="pn">${esc(disp(p))}</div><div class="ps">${p.nick?esc(p.name):''}${p.species?`${p.nick?' · ':''}<i>${esc(p.species)}</i>`:''}</div></div>
+ <div class="info3"><div class="it"><small>Water</small><b>Every ${p.every} days</b></div><div class="it l${l}"><small>Light</small><b><span class="sv">${sunIc(l)}</span>${esc(p.sun)}</b></div><div class="it"><small>Age</small><b>${esc(p.age||'Not set')}</b></div></div>
+ <div class="c2"><div class="wc"><div class="ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="var(--sand)" stroke-width="9"/><circle cx="50" cy="50" r="40" fill="none" stroke="${col}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${(C*pct).toFixed(1)} ${C.toFixed(1)}"/></svg><div class="n"><b style="color:${col}">${num}</b><small>${unit}</small></div></div>
+ <div class="wi"><div>Next watering<br><b>${fmtL(dn(today())+u)}</b></div><div>Last watered<br><b>${p.log.length?fmtL(dn(lastW(p))):'Never'}</b></div>${avg?`<div>Average gap <b>${avg.toFixed(1)} days</b></div>`:''}</div></div>
+ <button class="wbtn" id="wn2">${DROP.replace('<svg','<svg fill="currentColor"')}Water now</button></div>
+ ${p.analysis?`<div class="c2"><h4>About</h4><p>${esc(p.analysis)}</p></div>`:''}
+ ${tips.length?`<div class="c2"><h4>Care tips</h4><ul class="tips">${tips.map(x=>`<li>${LEAF}<span>${esc(x)}</span></li>`).join('')}</ul></div>`:''}
+ <div class="c2"><h4>Watering history · ${logs.length}</h4>${logs.length?`<div class="tlw">${shown.map((x,i)=>{const g=i<logs.length-1?dn(x.d)-dn(logs[i+1].d):null;return`<div class="tl"><span class="dot">${DROP}</span><div class="tx"><b>${fmtL(dn(x.d))}</b><small>${agoT(t-dn(x.d))}</small></div>${g==null?'<span class="gp first">First</span>':`<span class="gp ${g>p.every+1?'late':''}">+${g}d</span>`}<button class="lx" data-i="${x.i}" aria-label="Delete this watering"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div>`}).join('')}</div>${!allLog&&logs.length>6?`<button class="b more" id="all">Show all ${logs.length}</button>`:''}`:'<p style="color:var(--mut);font-weight:700;font-size:13.5px">No waterings logged yet.</p>'}</div>
+ <button class="dlp" id="dlp">Delete plant</button>`}
+function showView(p){
+ const sh=$('#sheet'),sc=sh.scrollTop;viewing=p;sh.innerHTML=viewHTML(p);sh.scrollTop=sc;$('#ov').classList.add('on');
+ tint(p.art,c=>{const h=$('#hero');if(c&&h)h.style.setProperty('--hc',c)});
+ $('#ed').onclick=()=>editSheet(p);
+ $('#wn2').onclick=()=>{water(p);showView(p)};
+ const al=$('#all');if(al)al.onclick=()=>{allLog=true;showView(p)};
+ sh.querySelectorAll('.lx').forEach(b=>b.onclick=()=>{if(!confirm('Delete this watering entry?'))return;p.log=p.log.filter(x=>x.i!=b.dataset.i);meta.ltomb[b.dataset.i]=Date.now();p.u=Date.now();commit();render();showView(p)});
+ $('#dlp').onclick=()=>{if(confirm('Delete this plant?')){plants=plants.filter(x=>x.id!=p.id);meta.tomb[p.id]=Date.now();commit();close();render()}};
+}
+function openSheet(p,draft){allLog=false;p&&!draft?showView(p):editSheet(p,draft);$('#ov').classList.add('on')}
+function editSheet(p,draft){
+ const nw=!p||!!draft;viewing=null;
  cur=draft?{...draft}:p?{...p,log:[...p.log]}:{id:uid(),name:'',nick:'',species:'',sun:'Bright indirect',every:7,age:'',analysis:'',tips:'',art:'',added:today(),log:[],u:Date.now()};
  if(cur.tips==null)cur.tips='';
  $('#sheet').innerHTML=`<div class="grab"></div>
  <div class="hd"><div class="pic edit" id="pv">${img(cur)}</div><div style="flex:1;min-width:0"><label class="l">Nickname</label><input id="nk" class="nm" value="${esc(cur.nick)}" placeholder="Optional"><label class="l" style="margin-top:8px">Plant</label><input id="nm" value="${esc(cur.name)}" placeholder="e.g. Monstera"></div></div>
- ${nw?`<div class="imp"><label class="b" for="fi">Import file</label><input class="vh" type="file" id="fi" multiple><button class="b" id="ps">Paste</button><button class="b" id="cp">Copy prompt</button></div><div id="pz"></div>`:`<div class="nx">${nxText(cur)}</div>`}
+ ${nw?`<div class="imp"><label class="b" for="fi">Import file</label><input class="vh" type="file" id="fi" multiple><button class="b" id="ps">Paste</button><button class="b" id="cp">Copy prompt</button></div><div id="pz"></div>`:''}
  <div class="msg" id="msg"></div>
- <div class="g2"><div><label class="l">Sun</label><select id="sn">${SUN.map(s=>`<option${s==cur.sun?' selected':''}>${s}</option>`).join('')}</select></div>
+ <div class="g2"><div><label class="l">Light</label><select id="sn">${SUN.map(s=>`<option${s==cur.sun?' selected':''}>${s}</option>`).join('')}</select></div>
  <div><label class="l">Water every</label><div class="num"><input id="ev" type="number" inputmode="numeric" min="1" max="90" value="${cur.every}"><span>days</span></div></div>
  <div><label class="l">Species</label><input id="sp" value="${esc(cur.species)}"></div>
  <div><label class="l">Est. age</label><input id="ag" value="${esc(cur.age)}"></div></div>
- <details><summary>Analysis</summary><textarea id="an" rows="4">${esc(cur.analysis)}</textarea></details>
- <details><summary>Care tips</summary><textarea id="nt" rows="5">${esc(cur.tips)}</textarea></details>
- ${nw?'':`<details><summary>Watering log<i>${cur.log.length}</i></summary><ul class="log">${[...cur.log].sort((a,b)=>b.d<a.d?-1:1).map(x=>`<li><span>${fmt(dn(x.d))}</span><button class="lx" data-i="${x.i}" aria-label="Delete this watering">×</button></li>`).join('')||'<li>Not watered yet</li>'}</ul></details>`}
- <div class="ft"><button id="sv">Save</button><button class="soft" id="cn">Cancel</button>${nw?'':'<button class="del" id="dl">Delete</button>'}</div>`;
- $('#ov').classList.add('on');
- $('#sheet').querySelectorAll('.lx').forEach(b=>b.onclick=()=>{if(!confirm('Delete this watering entry?'))return;const id=b.dataset.i,real=plants.find(x=>x.id==cur.id);cur.log=cur.log.filter(x=>x.i!=id);if(real){real.log=real.log.filter(x=>x.i!=id);real.u=Date.now()}cur.u=Date.now();meta.ltomb[id]=Date.now();commit();render();const li=b.closest('li'),ul=li.parentNode;li.remove();if(!ul.children.length)ul.innerHTML='<li>Not watered yet</li>';const c=$('#sheet summary i');if(c)c.textContent=cur.log.length;const nx=$('.nx');if(nx)nx.textContent=nxText(cur)});
+ <div class="eh">About</div><textarea id="an" rows="4">${esc(cur.analysis)}</textarea>
+ <div class="eh">Care tips · one per line</div><textarea id="nt" rows="5">${esc(cur.tips)}</textarea>
+ <div class="ft"><button id="sv">Save</button><button class="soft" id="cn">Cancel</button></div>`;
+ $('#ov').classList.add('on');$('#sheet').scrollTop=0;
  if(draft)say('Imported! Check the details, then Save.');
- $('#pv').onclick=openLib;$('#cn').onclick=close;
+ $('#pv').onclick=openLib;
+ $('#cn').onclick=()=>nw?close():showView(p);
  cur.hand=!!cur.art;
  const live=()=>{if(!cur.hand){const n=$('#nm').value.trim();cur.art=n?gen(n,$('#sp').value):'';$('#pv').innerHTML=img(cur)}};
  $('#nm').oninput=live;$('#sp').oninput=live;
  $('#sv').onclick=()=>{cur.nick=$('#nk').value.trim();cur.name=$('#nm').value.trim()||'Unnamed plant';cur.species=$('#sp').value.trim();cur.sun=$('#sn').value;cur.every=Math.max(1,parseInt($('#ev').value)||7);cur.age=$('#ag').value.trim();cur.analysis=$('#an').value;cur.tips=$('#nt').value;delete cur.hand;
   if(!cur.art)cur.art=gen(cur.name,cur.species);cur.u=Date.now();
-  const i=plants.findIndex(x=>x.id==cur.id);i<0?plants.push(cur):plants[i]=cur;delete meta.tomb[cur.id];commit();close();render()};
- if(!nw)$('#dl').onclick=()=>{if(confirm('Delete this plant?')){plants=plants.filter(x=>x.id!=cur.id);meta.tomb[cur.id]=Date.now();commit();close();render()}};
+  const i=plants.findIndex(x=>x.id==cur.id);i<0?plants.push(cur):plants[i]=cur;delete meta.tomb[cur.id];commit();render();nw?close():showView(cur)};
  if(nw){
   $('#fi').onchange=async e=>{const L=[];for(const f of e.target.files){try{L.push(parsePlant(await f.text()))}catch(x){}}
    if(!L.length){say('Couldn’t read that file. Is it a Leafy plant file?');return}
-   if(L.length==1){openSheet(null,L[0]);return}
+   if(L.length==1){editSheet(null,L[0]);return}
    plants.push(...L);commit();close();render();toast(`Added ${L.length} plants`)};
   $('#cp').onclick=async()=>{try{await navigator.clipboard.writeText(PROMPT);say('Prompt copied. Paste it into Claude with a photo of your plant.')}catch(x){$('#pz').innerHTML='<textarea id="pp" rows="5" readonly style="margin-top:8px"></textarea>';$('#pp').value=PROMPT;$('#pp').select();say('Select all and copy this prompt.')}};
   $('#ps').onclick=()=>{$('#pz').innerHTML='<textarea id="pt" rows="3" placeholder="Paste the plant file contents here" style="margin-top:8px"></textarea><button class="b" id="pi" style="margin-top:6px;width:100%">Import pasted text</button>';
-   $('#pi').onclick=()=>{try{openSheet(null,parsePlant($('#pt').value))}catch(x){say('That doesn’t look like a Leafy plant file.')}}};
+   $('#pi').onclick=()=>{try{editSheet(null,parsePlant($('#pt').value))}catch(x){say('That doesn’t look like a Leafy plant file.')}}};
  }
 }
 function openLib(){
@@ -345,7 +419,7 @@ $('#rf').onchange=async e=>{const f=e.target.files[0];if(!f)return;
 /* ---------- What's new pop-up (hold the version number) ---------- */
 const wn=$('#wn');let ready=false,hold;
 const clr=()=>{try{getSelection().removeAllRanges()}catch(e){}};
-function openWn(){clr();$('#rel').textContent='v3.3.0 · '+new Date(REL+'T00:00:00').toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});$('#surl').value=meta.url||'';ssay(meta.last?'Last synced '+new Date(meta.last).toLocaleString([],{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'');
+function openWn(){clr();$('#rel').textContent='v3.4.0 · '+new Date(REL+'T00:00:00').toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});$('#surl').value=meta.url||'';ssay(meta.last?'Last synced '+new Date(meta.last).toLocaleString([],{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'');
  ready=false;wn.classList.add('on','fresh');setTimeout(()=>{wn.classList.remove('fresh');ready=true;clr()},700)}
 document.addEventListener('selectionchange',()=>{if(wn.classList.contains('on')&&!ready)clr()});
 wn.addEventListener('click',e=>{if(ready&&e.target===wn)wn.classList.remove('on')});
