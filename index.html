@@ -10,11 +10,11 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Leafy</title>
 <style>
-:root{--bg:#f6f0e3;--card:#fffcf5;--ink:#27352b;--mut:#8b917d;--g:#3d7a56;--gs:#e2eed8;--line:#eadfc9;--sand:#efe6d2;--soon:#a8691a;--bad:#c0503a;--on:#fff;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161d18;--card:#1f2922;--ink:#ece6d6;--mut:#8f9b86;--g:#6fc28a;--gs:#263a2d;--line:#2c382f;--sand:#2a352d;--soon:#eba44e;--bad:#ef8a76;--on:#0f2417;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#161d18;--card:#1f2922;--ink:#ece6d6;--mut:#8f9b86;--g:#6fc28a;--gs:#263a2d;--line:#2c382f;--sand:#2a352d;--soon:#eba44e;--bad:#ef8a76;--on:#0f2417;color-scheme:dark}
+:root{--bg:#f6f0e3;--card:#fffcf5;--ink:#27352b;--mut:#6d7560;--g:#3d7a56;--gs:#e2eed8;--line:#eadfc9;--sand:#efe6d2;--soon:#a8691a;--bad:#c0503a;--on:#fff;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161d18;--card:#1f2922;--ink:#ece6d6;--mut:#a3ae99;--g:#6fc28a;--gs:#263a2d;--line:#2c382f;--sand:#2a352d;--soon:#eba44e;--bad:#ef8a76;--on:#0f2417;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#161d18;--card:#1f2922;--ink:#ece6d6;--mut:#a3ae99;--g:#6fc28a;--gs:#263a2d;--line:#2c382f;--sand:#2a352d;--soon:#eba44e;--bad:#ef8a76;--on:#0f2417;color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}html,body{overscroll-behavior-y:none}.ov,.pop{overscroll-behavior:contain}.sheet,.pc{overscroll-behavior:contain;touch-action:pan-y}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.35 ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,sans-serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 input,textarea{-webkit-user-select:text;user-select:text}
 main{max-width:620px;margin:0 auto;padding:6px 0 170px;overflow-x:hidden}
@@ -69,7 +69,7 @@ summary::-webkit-details-marker{display:none}
 summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--mut);border-bottom:2px solid var(--mut);transform:rotate(45deg);transition:.15s;margin-right:4px}
 details[open] summary::after{transform:rotate(-135deg)}summary i{font-style:normal;color:var(--mut);font-weight:700;margin-left:auto;margin-right:12px;font-size:13px}
 details textarea{margin-bottom:12px}
-.log{list-style:none;padding:0;margin:0 0 12px;max-height:150px;overflow:auto}.log li{display:flex;justify-content:space-between;align-items:center;padding:2px 2px;font-size:13.5px;color:var(--mut)}.lx{width:34px;height:34px;padding:0;border-radius:50%;background:transparent;color:var(--mut);display:grid;place-items:center}.lx svg{width:15px;height:15px}.lx:active{color:var(--bad);background:var(--sand)}
+.log{list-style:none;padding:0;margin:0 0 12px;max-height:150px;overflow:auto}.log li{display:flex;justify-content:space-between;align-items:center;padding:2px 2px;font-size:13.5px;color:var(--mut)}.lx{width:44px;height:44px;margin:-6px -8px -6px 0;padding:0;border-radius:50%;background:transparent;color:var(--mut);display:grid;place-items:center}.lx svg{width:15px;height:15px}.lx:active{color:var(--bad);background:var(--sand)}
 .ft{position:sticky;bottom:0;display:flex;gap:8px;padding:10px 0 calc(14px + env(safe-area-inset-bottom,0px));background:var(--bg);margin-top:6px}
 .ft button{flex:1}.ft #sv{flex:2}
 .lg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
@@ -77,7 +77,7 @@ details textarea{margin-bottom:12px}
 .lt .pic{width:100%;height:auto;aspect-ratio:1;border-radius:22px;margin-bottom:4px;display:grid;place-items:center;font-size:26px}
 /* light + view switch */
 .hr2{display:flex;align-items:center;gap:10px}
-.seg{display:flex;background:var(--sand);border-radius:13px;padding:3px;gap:2px}.seg button{width:38px;height:30px;padding:0;border-radius:10px;background:transparent;color:var(--mut);display:grid;place-items:center}.seg button.on{background:var(--card);color:var(--g);box-shadow:0 1px 4px rgba(0,0,0,.18)}.seg svg{width:17px;height:17px}
+.seg{display:flex;background:var(--sand);border-radius:13px;padding:3px;gap:2px}.seg button{width:44px;height:38px;padding:0;border-radius:10px;background:transparent;color:var(--mut);display:grid;place-items:center}.seg button.on{background:var(--card);color:var(--g);box-shadow:0 1px 4px rgba(0,0,0,.18)}.seg svg{width:17px;height:17px}
 .l4{--lc:217,140,10}.l3{--lc:200,150,20}.l2{--lc:120,160,40}.l1{--lc:90,130,160}
 .lc{display:inline-flex;align-items:center;gap:4px;margin-top:5px;padding:3px 9px 3px 7px;border-radius:99px;font-size:11px;font-weight:800;color:var(--ink);background:rgba(var(--lc),.2);max-width:100%;white-space:nowrap}.lc svg{width:12px;height:12px;flex:none;color:rgb(var(--lc))}
 .lh{display:flex;align-items:center;gap:10px;margin:24px 2px 14px}.lh:first-child{margin-top:4px}.lh b{font-size:15px;font-weight:800}.lh small{display:block;color:var(--mut);font-size:12px;font-weight:700}
@@ -89,7 +89,7 @@ body[data-tab=cal] .fab{display:none}
 .dock{position:fixed}.dock .ind{position:absolute;left:5px;top:5px;bottom:5px;width:96px;border-radius:17px;background:var(--gs);will-change:transform}
 .dock button{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:2px;width:96px;padding:7px 0 6px;border-radius:17px;background:transparent;color:var(--mut);font-size:11px;font-weight:800;transition:color .25s}.dock button.on{color:var(--g)}.dock svg{width:22px;height:22px}
 .ch{display:flex;align-items:center;justify-content:space-between;margin:0 2px 14px}.ch b{font-size:21px;font-weight:800;letter-spacing:-.3px}
-.cn{display:flex;gap:6px}.cn button{height:36px;min-width:36px;padding:0 10px;border-radius:12px;background:var(--sand);color:var(--ink);display:grid;place-items:center;font-size:12.5px}.cn svg{width:18px;height:18px}
+.cn{display:flex;gap:6px}.cn button{height:44px;min-width:44px;padding:0 10px;border-radius:12px;background:var(--sand);color:var(--ink);display:grid;place-items:center;font-size:12.5px}.cn svg{width:18px;height:18px}
 .wd{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}.wd span{text-align:center;font-size:11px;font-weight:800;color:var(--mut)}
 .cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .cd{min-height:68px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:4px 3px 3px;cursor:pointer;min-width:0}
@@ -104,7 +104,7 @@ body[data-tab=cal] .fab{display:none}
 .hero{position:relative;margin:-8px -16px 0;padding:8px 16px 4px;text-align:center;background:linear-gradient(180deg,var(--hc,var(--gs)) 0%,transparent 100%)}
 .hero .grab{background:rgba(0,0,0,.18)}
 .hero .pic{width:min(64vw,250px);height:auto;aspect-ratio:1;margin:10px auto 0;border-radius:34%;overflow:hidden;background:var(--gs);box-shadow:0 22px 38px -16px rgba(25,45,30,.55)}
-.ed{position:absolute;top:22px;right:18px;width:42px;height:42px;padding:0;border-radius:50%;display:grid;place-items:center;background:var(--card);color:var(--ink);box-shadow:0 3px 10px rgba(0,0,0,.18)}.ed svg{width:19px;height:19px}
+.ed{position:absolute;top:22px;right:18px;width:44px;height:44px;padding:0;border-radius:50%;display:grid;place-items:center;background:var(--card);color:var(--ink);box-shadow:0 3px 10px rgba(0,0,0,.18)}.ed svg{width:19px;height:19px}
 .pn{font-size:26px;font-weight:800;letter-spacing:-.5px;margin:18px 0 2px;line-height:1.15}.ps{color:var(--mut);font-weight:700;font-size:13.5px;min-height:18px}
 .info3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 12px}
 .it{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:11px 8px 12px;text-align:center;min-width:0}
@@ -126,6 +126,19 @@ body[data-tab=cal] .fab{display:none}
 .more{width:100%;margin-top:8px;padding:10px}
 .dlp{display:block;margin:6px auto calc(22px + env(safe-area-inset-bottom,0px));background:transparent;color:var(--bad);font-size:13.5px}
 .eh{font-size:11px;font-weight:800;color:var(--mut);margin:14px 0 3px 2px;text-transform:uppercase;letter-spacing:.5px}
+/* v3.5 */
+.hl{display:flex;align-items:center}.sd{display:none;width:34px;height:44px;padding:0;background:transparent;place-items:center}.sd.on{display:grid}.sd i{width:10px;height:10px;border-radius:50%;background:var(--mut);display:block}.sd.ok i{background:#4caf6f}.sd.busy i{background:var(--soon);animation:bz 1s infinite}.sd.err i{background:var(--bad)}@keyframes bz{50%{opacity:.3}}
+.tipb{display:flex;gap:10px;align-items:center;background:var(--gs);border-radius:18px;padding:12px 14px;margin:0 0 20px;font-size:13px;font-weight:700;line-height:1.4}.tipb button{flex:none;background:var(--card);color:var(--g);padding:9px 14px;font-size:12.5px;border-radius:12px}
+.welc{padding:24px 4px}.welc h2{margin:4px 0 4px;font-size:23px;color:var(--ink)}.welc p{margin:0 0 18px;font-weight:700}
+.steps{list-style:none;padding:0;margin:0 0 20px;text-align:left}.steps li{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:11px 14px;margin-bottom:8px;font-size:13.5px;color:var(--ink);font-weight:700}.steps b{width:26px;height:26px;border-radius:50%;background:var(--gs);color:var(--g);display:grid;place-items:center;font-size:13px;flex:none}
+.welc button{width:100%;padding:14px}
+#dlg{z-index:80}#dlm{margin:8px 0 0;color:var(--mut);font-size:13.5px;font-weight:600;line-height:1.45}.dbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.dbtns button{flex:1 1 40%;padding:13px 8px}button.dang{background:var(--bad);color:#fff}
+.tg{position:relative;width:48px;height:28px;flex:none;display:block}.tg input{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;opacity:0;z-index:2;cursor:pointer}.tg i{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:.2s}.tg i::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:.2s}.tg input:checked+i{background:var(--g)}.tg input:checked+i::after{transform:translateX(20px)}
+.sw2{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13.5px;font-weight:750;margin-top:16px;cursor:pointer}
+.pc .row button.on{background:var(--g);color:var(--on)}
+.it .sub{display:block;font-size:11px;font-weight:800;color:var(--soon);margin-top:3px}
+.wsub{display:flex;gap:8px;margin-top:8px}.wsub .b{padding:12px 6px}
+.dot.s{background:var(--sand);color:var(--mut)}.dot.z{background:rgba(224,160,40,.2);color:var(--soon)}.dot svg{stroke-linecap:round}
 /* What's new pop-up */
 .pop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:50;background:rgba(0,0,0,.38);padding:22px}.pop.on{display:flex}
 .pc{background:var(--card);border-radius:24px;width:100%;max-width:330px;max-height:74vh;overflow:auto;padding:16px 18px 18px;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:pp .2s cubic-bezier(.2,.9,.3,1.15)}
@@ -133,7 +146,7 @@ body[data-tab=cal] .fab{display:none}
 .pop.fresh .pc{pointer-events:none}
 .pc,.pc *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}.pc input{-webkit-user-select:text;user-select:text}
 .ph{display:flex;align-items:center;justify-content:space-between;gap:10px}.ph b{font-size:19px;font-weight:800}.ph small{display:block;font-size:12px;color:var(--mut);font-weight:700}
-.icon{width:38px;height:38px;padding:0;display:grid;place-items:center;background:var(--sand);color:var(--ink);border-radius:50%;flex:none}
+.icon{width:44px;height:44px;padding:0;display:grid;place-items:center;background:var(--sand);color:var(--ink);border-radius:50%;flex:none}
 .pc h3{margin:14px 0 3px;font-size:13px}.pc ul{margin:0;padding-left:18px;color:var(--mut);font-size:13px}.pc li{margin:2px 0}
 .pc .hr{border-top:1px solid var(--line);margin:14px 0 10px}
 .pc .row{display:flex;gap:8px;margin-top:8px}.pc .row>*{flex:1}.pc .row button{padding:9px 6px;font-size:13px}
@@ -142,22 +155,26 @@ body[data-tab=cal] .fab{display:none}
 </style>
 </head>
 <body>
-<main><header><h1>Leafy</h1><div class="hr2" id="hr"><div class="chip" id="chip"></div><div class="seg" id="seg"><button data-v="water" aria-label="Group by watering"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c3.6 4.4 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.4-6.6 6-11z"/></svg></button><button data-v="light" aria-label="Group by light"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" stroke="none"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" fill="none" stroke-width="2"/></svg></button></div></div></header><div class="pager" id="pager"><div class="pane" id="p0"><div id="list"></div></div><div class="pane off" id="p1"><div id="cal"></div></div></div></main>
+<main><header><div class="hl"><h1>Leafy</h1><button class="sd" id="sd" aria-label="Sync status"><i></i></button></div><div class="hr2" id="hr"><div class="chip" id="chip"></div><div class="seg" id="seg"><button data-v="water" aria-label="Group by watering"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c3.6 4.4 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.4-6.6 6-11z"/></svg></button><button data-v="light" aria-label="Group by light"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" stroke="none"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" fill="none" stroke-width="2"/></svg></button></div></div></header><div class="pager" id="pager"><div class="pane" id="p0"><div id="list"></div></div><div class="pane off" id="p1"><div id="cal"></div></div></div></main>
 <button class="fab" id="add" aria-label="Add plant"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
 <nav class="dock"><span class="ind"></span><button data-t="plants" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19l7-7"/></svg>Plants</button><button data-t="cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Calendar</button></nav>
-<footer><span id="ver">v3.4.0</span></footer>
+<footer><span id="ver">v3.5.0</span></footer>
 <div class="toast" id="toast"></div>
+<div class="pop" id="dlg"><div class="pc"><div class="ph"><b id="dlt"></b></div><p id="dlm"></p><div class="dbtns" id="dlb"></div></div></div>
 <div class="pop" id="dp"><div class="pc"><div class="ph"><div><b id="dpt"></b><small id="dps"></small></div></div><div id="dpl" style="margin-top:8px"></div></div></div>
 <div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
 <div class="ov" id="lib"><div class="sheet" id="libs"></div></div>
 <div class="pop" id="wn"><div class="pc">
 <div class="ph"><div><b>What’s new</b><small id="rel"></small></div><button class="icon" id="thm" aria-label="Toggle dark or light mode"></button></div>
+<h3>v3.5.0</h3>
+<ul><li>Snooze and Skip a watering</li><li>Seasonal watering adjustment</li><li>Smoother swipe-down on profiles</li><li>In-app dialogs, bigger tap targets, even dashboard tiles</li><li>Sync status dot, light vibration feedback, welcome screen and first-use tip</li></ul>
 <h3>v3.4.0</h3>
 <ul><li>Redesigned plant profile: bigger picture, everything on one clean screen, ring countdown and a watering timeline</li><li>Swipe left or right to switch between Plants and Calendar</li><li>Smooth sliding tab indicator</li></ul>
-<h3>v3.3.0</h3>
-<ul><li>Light level is now a small icon on each plant (tap it to see what it means)</li><li>New Calendar tab: see which days each plant needs watering</li></ul>
-<h3>v3.2.0</h3>
-<ul><li>Safer watering: tap the droplet, then tap again to confirm</li><li>Light needs on every plant, plus a Group by light view</li><li>Swipe a profile down to close it</li><li>Delete individual watering entries</li></ul>
+<div class="hr"></div>
+<h3 style="margin-top:0">Seasonal watering</h3>
+<label class="sw2" style="margin-top:6px"><span>Adjust intervals for the season</span><span class="tg"><input type="checkbox" id="sea"><i></i></span></label>
+<div class="row"><button class="soft" id="hS">Southern</button><button class="soft" id="hN">Northern</button></div>
+<div class="sm" id="seaTxt"></div>
 <div class="hr"></div>
 <h3 style="margin-top:0">Sheet sync</h3>
 <input id="surl" placeholder="Paste your Apps Script link" autocomplete="off" autocapitalize="off" spellcheck="false">
@@ -177,7 +194,7 @@ function gen(name,species){const s=((name||'')+' '+(species||'')).toLowerCase(),
 
 const $=s=>document.querySelector(s);
 const SUN=['Low light','Bright indirect','Partial sun','Full sun'];
-const REL='2026-11-13';
+const REL='2026-11-14';
 const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
@@ -192,7 +209,7 @@ const DROP='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c3.6 4.
 
 /* ---------- data ---------- */
 let plants=ld('leafy.plants',[]);
-let meta=Object.assign({tomb:{},ltomb:{},rev:0,url:'',last:0},ld('leafy.meta',{}));
+let meta=Object.assign({tomb:{},ltomb:{},rev:0,url:'',last:0,sea:true,hemi:'S'},ld('leafy.meta',{}));
 const saveLocal=()=>{sv('leafy.plants',plants);sv('leafy.meta',meta)};
 let syncT;const commit=()=>{saveLocal();clearTimeout(syncT);syncT=setTimeout(()=>sync(false),1500)};
 function migrate(list){let ch=false;list.forEach(p=>{
@@ -202,8 +219,13 @@ function migrate(list){let ch=false;list.forEach(p=>{
  p.log=(p.log||[]).map(x=>typeof x=='string'?(ch=true,{i:'m'+p.id+x,d:x,t:0}):x)});return ch}
 const disp=p=>p.nick||p.name;
 const nxText=p=>`Next watering ${fmt(dn(today())+until(p))} · last ${fmt(dn(lastW(p)))}`;
-const lastW=p=>p.log.length?p.log.reduce((m,x)=>x.d>m?x.d:m,'0000'):p.added;
-const until=p=>dn(lastW(p))+p.every-dn(today());
+const SEAS={summer:.85,autumn:1.1,winter:1.5,spring:1},FLIP={winter:'summer',summer:'winter',spring:'autumn',autumn:'spring'};
+function season(d){const m=new Date(d*864e5).getUTCMonth(),n=m==11||m<=1?'winter':m<=4?'spring':m<=7?'summer':'autumn';return meta.hemi=='N'?n:FLIP[n]}
+const isW=x=>!x.k;
+const effEvery=(p,d)=>Math.max(1,Math.round(p.every*(meta.sea!==false&&p.sea!==false?SEAS[season(d)]:1)));
+const lastW=p=>{const w=p.log.filter(isW);return w.length?w.reduce((m,x)=>x.d>m?x.d:m,'0000'):p.added};
+function dueDay(p){const ev=[...p.log].sort((a,b)=>a.d<b.d?-1:a.d>b.d?1:(a.t||0)-(b.t||0));let due=dn(p.added)+effEvery(p,dn(p.added));for(const x of ev){const d=dn(x.d);due=x.k=='z'?Math.max(due,d)+x.n:d+effEvery(p,d)}return due}
+const until=p=>dueDay(p)-dn(today());
 function status(p){const u=until(p);return u<0?{t:`−${-u}d`,c:'late'}:u==0?{t:'Today',c:'now'}:u==1?{t:'1d',c:'soon'}:{t:`${u}d`,c:''}}
 
 /* ---------- dashboard ---------- */
@@ -213,28 +235,29 @@ const sunIc=n=>{const r=n>=4?8:n==3?6:4;let o='';for(let i=0;i<r;i++){const a=i*
  return n>1?`<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" stroke="none"/><path d="${o}" fill="none" stroke-width="2.2"/></svg>`:`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>`};
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
 let view=ld('leafy.view','water'),armed=null,armT;
-function arm(b){disarm();armed=b;b.dataset.old=b.innerHTML;b.classList.add('arm');b.innerHTML=CHECK+'Water';armT=setTimeout(disarm,3000)}
+function arm(b){disarm();armed=b;buzz(8);b.dataset.old=b.innerHTML;b.classList.add('arm');b.innerHTML=CHECK+'Water';armT=setTimeout(disarm,3000)}
 function disarm(){clearTimeout(armT);if(armed){armed.classList.remove('arm');if(armed.dataset.old)armed.innerHTML=armed.dataset.old;armed=null}}
 document.addEventListener('click',e=>{if(!e.target.closest('.bdg'))disarm()});
-const tile=(p,showL)=>{const st=status(p),l=LV[p.sun]||2;return`<div class="tile ${st.c}" data-id="${p.id}"><div class="ico">${img(p)}<span class="si l${l}" role="img" aria-label="${esc(p.sun)}" data-sun="${esc(p.sun)}">${sunIc(l)}</span><button class="bdg ${st.c}" data-w="${p.id}" aria-label="Log watering for ${esc(disp(p))}">${DROP}${st.t}</button></div><span class="tn">${esc(disp(p))}</span>${p.nick?`<span class="ts">${esc(p.name)}</span>`:''}</div>`};
+const tile=(p,showL)=>{const st=status(p),l=LV[p.sun]||2;return`<div class="tile ${st.c}" data-id="${p.id}"><div class="ico">${img(p)}<span class="si l${l}" role="img" aria-label="${esc(p.sun)}" data-sun="${esc(p.sun)}">${sunIc(l)}</span><button class="bdg ${st.c}" data-w="${p.id}" aria-label="Log watering for ${esc(disp(p))}">${DROP}${st.t}</button></div><span class="tn">${esc(disp(p))}</span></div>`};
 function render(splash){renderPlants(splash);renderCal()}
 function renderPlants(splash){
  const el=$('#list'),due=plants.filter(p=>until(p)<=0).length,chip=$('#chip');
  chip.style.display=due&&view=='water'?'flex':'none';chip.innerHTML=due?`<span style="width:14px;height:14px;display:inline-flex">${DROP}</span>${due} to water`:'';
  document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on',b.dataset.v==view));
- if(!plants.length){el.innerHTML=`<div class="empty">${pic({art:'monstera'},'ico')}No plants yet.<br>Tap + to add your first one.</div>`;return}
+ if(!plants.length){el.innerHTML=`<div class="empty welc">${pic({art:'monstera'},'ico')}<h2>Welcome to Leafy</h2><p>Keep your plants watered and happy.</p><ol class="steps"><li><b>1</b>Add a plant, or import a plant file from Claude</li><li><b>2</b>Tap a droplet, then tap again to log a watering</li><li><b>3</b>Swipe left to see your watering calendar</li></ol><button id="first">Add your first plant</button></div>`;$('#first').onclick=()=>openSheet();return}
  const s=[...plants].sort((a,b)=>until(a)-until(b)||disp(a).localeCompare(disp(b)));
  el.innerHTML=view=='light'?Object.keys(LV).sort((a,b)=>LV[b]-LV[a]).map(k=>{const L=s.filter(p=>(LV[p.sun]?p.sun:'Bright indirect')==k);return L.length?`<div class="lh l${LV[k]}"><div class="li">${sunIc(LV[k])}</div><div><b>${k}</b><small>${LH[k]}</small></div></div><div class="grid">${L.map(p=>tile(p,false)).join('')}</div>`:''}).join(''):`<div class="grid">${s.map(p=>tile(p,true)).join('')}</div>`;
  el.querySelectorAll('.tile').forEach(t=>t.onclick=e=>{const p=plants.find(x=>x.id==t.dataset.id),b=e.target.closest('.bdg'),si=e.target.closest('.si');
   if(si){disarm();toast(`${p.sun} · ${LH[p.sun]||''}`);return}
   if(b){armed===b?(disarm(),water(p)):arm(b)}else{disarm();openSheet(p)}});
  if(splash){const t=el.querySelector(`[data-id="${splash}"]`);t&&t.classList.add('splash')}
+ if(!ld('leafy.tip1',false)){el.insertAdjacentHTML('afterbegin','<div class="tipb"><span>Tip: tap a droplet, then tap again to log a watering. Swipe left for the calendar.</span><button id="tipx">Got it</button></div>');$('#tipx').onclick=()=>{sv('leafy.tip1',true);renderPlants()}}
 }
 document.querySelectorAll('#seg button').forEach(b=>b.onclick=()=>{view=b.dataset.v;sv('leafy.view',view);render()});
 let tab='plants',cm={y:new Date().getFullYear(),m:new Date().getMonth()};
 function calMap(a,z,t){const map={},add=(d,p,k)=>{if(d>=a&&d<=z)(map[d]=map[d]||[]).push({p,k})};
- plants.forEach(p=>{p.log.forEach(x=>{const d=dn(x.d);if(d<=t)add(d,p,'done')});
-  const due=dn(lastW(p))+p.every;let d=Math.max(due,t);if(d==t&&due<t)add(d,p,'late'),d+=p.every;while(d<=z){add(d,p,'due');d+=p.every}});
+ plants.forEach(p=>{p.log.forEach(x=>{const d=dn(x.d);if(d<=t&&isW(x))add(d,p,'done')});
+  const due=dueDay(p);let d=Math.max(due,t);if(d==t&&due<t)add(d,p,'late'),d+=effEvery(p,d);while(d<=z){add(d,p,'due');d+=effEvery(p,d)}});
  for(const k in map)map[k].sort((x,y)=>(x.k=='done')-(y.k=='done'));return map}
 const CH=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
 function renderCal(){
@@ -271,10 +294,14 @@ dBtn.forEach(b=>b.onclick=()=>animTo(b.dataset.t=='cal'?1:0));
  m.addEventListener('touchend',()=>{if(!dir){sx=null;return}const v=(prog-sp)/Math.max(1,Date.now()-st);let t=prog>.5?1:0;if(Math.abs(v)>.0011)t=v>0?1:0;dir=0;sx=null;animTo(t,380)});
  addEventListener('resize',()=>setProg(prog))}
 settle(0);setProg(0);
-function water(p){
- const e={i:uid(),d:today(),t:Date.now()};p.log.push(e);p.u=Date.now();commit();render(p.id);
- toast(`Watered ${disp(p)}`,()=>{p.log=p.log.filter(x=>x.i!=e.i);meta.ltomb[e.i]=Date.now();p.u=Date.now();commit();render();if(viewing===p)showView(p)});
-}
+const buzz=ms=>{try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}};
+function evt(p,k,n){const e={i:uid(),d:today(),t:Date.now()};if(k)e.k=k;if(n)e.n=n;p.log.push(e);p.u=Date.now();commit();render(k?undefined:p.id);return e}
+const undoEvt=(p,e)=>{p.log=p.log.filter(x=>x.i!=e.i);meta.ltomb[e.i]=Date.now();p.u=Date.now();commit();render();if(viewing===p)showView(p)};
+function water(p){buzz(18);const e=evt(p);toast(`Watered ${disp(p)}`,()=>undoEvt(p,e))}
+function snooze(p,n){buzz(12);const e=evt(p,'z',n);toast(`Snoozed ${disp(p)} · ${n==7?'1 week':n+(n==1?' day':' days')}`,()=>undoEvt(p,e))}
+function skip(p){buzz(12);const e=evt(p,'s');toast(`Skipped ${disp(p)}`,()=>undoEvt(p,e))}
+function ask(title,msg,btns){return new Promise(res=>{$('#dlt').textContent=title;$('#dlm').textContent=msg||'';$('#dlb').innerHTML=btns.map((b,i)=>`<button class="${b.c||'soft'}" data-i="${i}">${esc(b.t)}</button>`).join('');$('#dlg').classList.add('on');const done=v=>{$('#dlg').classList.remove('on');res(v)};$('#dlb').querySelectorAll('button').forEach(b=>b.onclick=()=>done(btns[+b.dataset.i].v));$('#dlg').onclick=e=>{if(e.target.id=='dlg')done(null)}})}
+const confirmBox=(t,m,ok,danger)=>ask(t,m,[{t:'Cancel',v:false},{t:ok,v:true,c:danger?'dang':''}]).then(v=>!!v);
 let tt;function toast(m,undo){const t=$('#toast');t.innerHTML=esc(m)+(undo?'<button id="ud">Undo</button>':'');t.classList.add('on');if(undo)$('#ud').onclick=()=>{undo();t.classList.remove('on')};clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),4000)}
 
 /* ---------- import ---------- */
@@ -301,29 +328,35 @@ const tcache={};
 function tint(k,cb){if(k in tcache)return cb(tcache[k]);const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=8;const x=c.getContext('2d');x.drawImage(im,0,0,8,8);const d=x.getImageData(0,0,1,1).data;tcache[k]=`rgb(${d[0]},${d[1]},${d[2]})`}catch(e){tcache[k]=''}cb(tcache[k])};im.src=artUrl(k)}
 const fmtL=n=>new Date(n*864e5).toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'});
 const agoT=n=>n<=0?'Today':n==1?'Yesterday':`${n} days ago`;
+const SKIPI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l6 6-6 6M13 6l6 6-6 6"/></svg>',CLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>',XI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>';
 function viewHTML(p){
- const u=until(p),l=LV[p.sun]||2,t=dn(today()),logs=[...p.log].sort((a,b)=>a.d<b.d?1:-1),C=2*Math.PI*40;
- const pct=Math.max(0,Math.min(1,1-u/p.every)),col=u<0?'var(--bad)':u<=1?'var(--soon)':'var(--g)';
- const gaps=logs.slice(0,-1).map((x,i)=>dn(x.d)-dn(logs[i+1].d)),avg=gaps.length?gaps.reduce((s,x)=>s+x,0)/gaps.length:0;
+ const T=dn(today()),u=until(p),l=LV[p.sun]||2,ev=effEvery(p,T),logs=[...p.log].sort((a,b)=>a.d<b.d?1:a.d>b.d?-1:(b.t||0)-(a.t||0)),ws=logs.filter(isW),C=2*Math.PI*40;
+ const pct=Math.max(0,Math.min(1,1-u/ev)),col=u<0?'var(--bad)':u<=1?'var(--soon)':'var(--g)';
+ const gap={};ws.forEach((x,i)=>{if(i<ws.length-1)gap[x.i]=dn(x.d)-dn(ws[i+1].d)});const gs=Object.values(gap),avg=gs.length?gs.reduce((s,x)=>s+x,0)/gs.length:0;
  const tips=(p.tips||'').split('\n').map(s=>s.trim()).filter(Boolean),shown=allLog?logs:logs.slice(0,6);
  const num=u<0?-u:u,unit=u<0?(num==1?'day late':'days late'):u==0?'due today':u==1?'day left':'days left';
+ const sn=season(T),adj=meta.sea!==false&&p.sea!==false&&ev!=p.every;
+ const row=x=>{const k=x.k,ic=k=='s'?SKIPI:k=='z'?CLOCK:DROP,lab=k=='s'?'Skipped':k=='z'?`Snoozed ${x.n==7?'1 week':x.n+(x.n==1?' day':' days')}`:'Watered',chip=k?'':(x.i in gap?`<span class="gp ${gap[x.i]>ev+1?'late':''}">+${gap[x.i]}d</span>`:'<span class="gp first">First</span>');
+  return`<div class="tl"><span class="dot ${k||''}">${ic}</span><div class="tx"><b>${fmtL(dn(x.d))}</b><small>${agoT(T-dn(x.d))} · ${lab}</small></div>${chip}<button class="lx" data-i="${x.i}" aria-label="Delete this entry">${XI}</button></div>`};
  return `<div class="hero" id="hero"><div class="grab"></div><button class="ed" id="ed" aria-label="Edit plant">${PEN}</button><div class="pic">${img(p)}</div><div class="pn">${esc(disp(p))}</div><div class="ps">${p.nick?esc(p.name):''}${p.species?`${p.nick?' · ':''}<i>${esc(p.species)}</i>`:''}</div></div>
- <div class="info3"><div class="it"><small>Water</small><b>Every ${p.every} days</b></div><div class="it l${l}"><small>Light</small><b><span class="sv">${sunIc(l)}</span>${esc(p.sun)}</b></div><div class="it"><small>Age</small><b>${esc(p.age||'Not set')}</b></div></div>
+ <div class="info3"><div class="it"><small>Water</small><b>Every ${p.every} days</b>${adj?`<span class="sub">${sn}: ${ev} days now</span>`:''}</div><div class="it l${l}"><small>Light</small><b><span class="sv">${sunIc(l)}</span>${esc(p.sun)}</b></div><div class="it"><small>Age</small><b>${esc(p.age||'Not set')}</b></div></div>
  <div class="c2"><div class="wc"><div class="ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="var(--sand)" stroke-width="9"/><circle cx="50" cy="50" r="40" fill="none" stroke="${col}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${(C*pct).toFixed(1)} ${C.toFixed(1)}"/></svg><div class="n"><b style="color:${col}">${num}</b><small>${unit}</small></div></div>
- <div class="wi"><div>Next watering<br><b>${fmtL(dn(today())+u)}</b></div><div>Last watered<br><b>${p.log.length?fmtL(dn(lastW(p))):'Never'}</b></div>${avg?`<div>Average gap <b>${avg.toFixed(1)} days</b></div>`:''}</div></div>
- <button class="wbtn" id="wn2">${DROP.replace('<svg','<svg fill="currentColor"')}Water now</button></div>
+ <div class="wi"><div>Next watering<br><b>${fmtL(T+u)}</b></div><div>Last watered<br><b>${ws.length?fmtL(dn(lastW(p))):'Never'}</b></div>${avg?`<div>Average gap <b>${avg.toFixed(1)} days</b></div>`:''}</div></div>
+ <button class="wbtn" id="wn2">${DROP.replace('<svg','<svg fill="currentColor"')}Water now</button><div class="wsub"><button class="b" id="snz">Snooze</button><button class="b" id="skp">Skip</button></div></div>
  ${p.analysis?`<div class="c2"><h4>About</h4><p>${esc(p.analysis)}</p></div>`:''}
  ${tips.length?`<div class="c2"><h4>Care tips</h4><ul class="tips">${tips.map(x=>`<li>${LEAF}<span>${esc(x)}</span></li>`).join('')}</ul></div>`:''}
- <div class="c2"><h4>Watering history · ${logs.length}</h4>${logs.length?`<div class="tlw">${shown.map((x,i)=>{const g=i<logs.length-1?dn(x.d)-dn(logs[i+1].d):null;return`<div class="tl"><span class="dot">${DROP}</span><div class="tx"><b>${fmtL(dn(x.d))}</b><small>${agoT(t-dn(x.d))}</small></div>${g==null?'<span class="gp first">First</span>':`<span class="gp ${g>p.every+1?'late':''}">+${g}d</span>`}<button class="lx" data-i="${x.i}" aria-label="Delete this watering"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div>`}).join('')}</div>${!allLog&&logs.length>6?`<button class="b more" id="all">Show all ${logs.length}</button>`:''}`:'<p style="color:var(--mut);font-weight:700;font-size:13.5px">No waterings logged yet.</p>'}</div>
+ <div class="c2"><h4>History · ${logs.length}</h4>${logs.length?`<div class="tlw">${shown.map(row).join('')}</div>${!allLog&&logs.length>6?`<button class="b more" id="all">Show all ${logs.length}</button>`:''}`:'<p style="color:var(--mut);font-weight:700;font-size:13.5px">Nothing logged yet.</p>'}</div>
  <button class="dlp" id="dlp">Delete plant</button>`}
 function showView(p){
- const sh=$('#sheet'),sc=sh.scrollTop;viewing=p;sh.innerHTML=viewHTML(p);sh.scrollTop=sc;$('#ov').classList.add('on');
+ const sh=$('#sheet'),sc=sh.scrollTop,T=dn(today());viewing=p;sh.innerHTML=viewHTML(p);sh.scrollTop=sc;$('#ov').classList.add('on');
  tint(p.art,c=>{const h=$('#hero');if(c&&h)h.style.setProperty('--hc',c)});
  $('#ed').onclick=()=>editSheet(p);
  $('#wn2').onclick=()=>{water(p);showView(p)};
+ $('#snz').onclick=async()=>{const n=await ask('Snooze watering','Soil still damp? Check again in…',[{t:'1 day',v:1},{t:'2 days',v:2},{t:'3 days',v:3},{t:'1 week',v:7},{t:'Cancel',v:null}]);if(n){snooze(p,n);showView(p)}};
+ $('#skp').onclick=async()=>{if(await confirmBox('Skip this watering?',`${disp(p)} won’t be marked as watered. Its next watering moves to ${fmtL(T+effEvery(p,T))}.`,'Skip')){skip(p);showView(p)}};
  const al=$('#all');if(al)al.onclick=()=>{allLog=true;showView(p)};
- sh.querySelectorAll('.lx').forEach(b=>b.onclick=()=>{if(!confirm('Delete this watering entry?'))return;p.log=p.log.filter(x=>x.i!=b.dataset.i);meta.ltomb[b.dataset.i]=Date.now();p.u=Date.now();commit();render();showView(p)});
- $('#dlp').onclick=()=>{if(confirm('Delete this plant?')){plants=plants.filter(x=>x.id!=p.id);meta.tomb[p.id]=Date.now();commit();close();render()}};
+ sh.querySelectorAll('.lx').forEach(b=>b.onclick=async()=>{if(!await confirmBox('Delete this entry?','It will be removed from the history and the schedule will update.','Delete',true))return;buzz(20);p.log=p.log.filter(x=>x.i!=b.dataset.i);meta.ltomb[b.dataset.i]=Date.now();p.u=Date.now();commit();render();showView(p)});
+ $('#dlp').onclick=async()=>{if(await confirmBox('Delete this plant?',`${disp(p)} and its history will be removed.`,'Delete',true)){buzz(20);plants=plants.filter(x=>x.id!=p.id);meta.tomb[p.id]=Date.now();commit();close();render()}};
 }
 function openSheet(p,draft){allLog=false;p&&!draft?showView(p):editSheet(p,draft);$('#ov').classList.add('on')}
 function editSheet(p,draft){
@@ -340,6 +373,7 @@ function editSheet(p,draft){
  <div><label class="l">Est. age</label><input id="ag" value="${esc(cur.age)}"></div></div>
  <div class="eh">About</div><textarea id="an" rows="4">${esc(cur.analysis)}</textarea>
  <div class="eh">Care tips · one per line</div><textarea id="nt" rows="5">${esc(cur.tips)}</textarea>
+ <label class="sw2"><span>Adjust watering for the season</span><span class="tg"><input type="checkbox" id="sea2" ${cur.sea!==false?'checked':''}><i></i></span></label>
  <div class="ft"><button id="sv">Save</button><button class="soft" id="cn">Cancel</button></div>`;
  $('#ov').classList.add('on');$('#sheet').scrollTop=0;
  if(draft)say('Imported! Check the details, then Save.');
@@ -348,7 +382,7 @@ function editSheet(p,draft){
  cur.hand=!!cur.art;
  const live=()=>{if(!cur.hand){const n=$('#nm').value.trim();cur.art=n?gen(n,$('#sp').value):'';$('#pv').innerHTML=img(cur)}};
  $('#nm').oninput=live;$('#sp').oninput=live;
- $('#sv').onclick=()=>{cur.nick=$('#nk').value.trim();cur.name=$('#nm').value.trim()||'Unnamed plant';cur.species=$('#sp').value.trim();cur.sun=$('#sn').value;cur.every=Math.max(1,parseInt($('#ev').value)||7);cur.age=$('#ag').value.trim();cur.analysis=$('#an').value;cur.tips=$('#nt').value;delete cur.hand;
+ $('#sv').onclick=()=>{cur.nick=$('#nk').value.trim();cur.name=$('#nm').value.trim()||'Unnamed plant';cur.species=$('#sp').value.trim();cur.sun=$('#sn').value;cur.every=Math.max(1,parseInt($('#ev').value)||7);cur.age=$('#ag').value.trim();cur.analysis=$('#an').value;cur.tips=$('#nt').value;cur.sea=$('#sea2').checked;delete cur.hand;
   if(!cur.art)cur.art=gen(cur.name,cur.species);cur.u=Date.now();
   const i=plants.findIndex(x=>x.id==cur.id);i<0?plants.push(cur):plants[i]=cur;delete meta.tomb[cur.id];commit();render();nw?close():showView(cur)};
  if(nw){
@@ -371,11 +405,16 @@ $('#lib').onclick=e=>{if(e.target.id=='lib')$('#lib').classList.remove('on')};
 $('#ov').onclick=e=>{if(e.target.id=='ov')close()};
 $('#add').onclick=()=>openSheet();
 function swipeClose(sheet,ov,closeFn){
- let y0=null,dy=0,drag=false,t0=0;
+ let y0=null,base=0,dy=0,drag=false,t0=0;
  const reset=()=>{sheet.style.transform='';sheet.style.transition='';ov.style.background=''};
- sheet.addEventListener('touchstart',e=>{y0=(sheet.scrollTop>0||e.target.closest('input,textarea,select'))?null:e.touches[0].clientY;dy=0;drag=false;t0=Date.now()},{passive:true});
- sheet.addEventListener('touchmove',e=>{if(y0==null)return;dy=e.touches[0].clientY-y0;if(!drag&&dy>10&&sheet.scrollTop<=0)drag=true;if(drag){e.preventDefault();sheet.style.transition='none';sheet.style.transform=`translateY(${Math.max(0,dy)}px)`;ov.style.background=`rgba(0,0,0,${Math.max(0,.4*(1-dy/450)).toFixed(2)})`}},{passive:false});
- sheet.addEventListener('touchend',()=>{if(!drag){y0=null;return}const fast=dy/Math.max(1,Date.now()-t0)>.6;sheet.style.transition='transform .2s ease';if(dy>110||fast){sheet.style.transform='translateY(100%)';setTimeout(()=>{closeFn();reset()},190)}else{sheet.style.transform='';setTimeout(reset,210)}y0=null;drag=false});
+ ov.addEventListener('touchstart',e=>{y0=e.target.closest('input,textarea,select')?null:e.touches[0].clientY;drag=false;dy=0;t0=Date.now()},{passive:true});
+ ov.addEventListener('touchmove',e=>{
+  if(e.target===ov&&!drag)e.preventDefault();
+  if(y0==null)return;const y=e.touches[0].clientY;
+  if(!drag){if(sheet.scrollTop>0){y0=y;return}if(y-y0>2){drag=true;base=y0}else return}
+  e.preventDefault();dy=y-base;sheet.style.transition='none';sheet.style.transform=`translateY(${Math.max(0,dy)}px)`;ov.style.background=`rgba(0,0,0,${Math.max(0,.4*(1-dy/450)).toFixed(2)})`},{passive:false});
+ const end=()=>{if(!drag){y0=null;return}const fast=dy/Math.max(1,Date.now()-t0)>.5;sheet.style.transition='transform .22s ease';if(dy>100||fast){sheet.style.transform='translateY(100%)';setTimeout(()=>{closeFn();reset()},200)}else{sheet.style.transform='';setTimeout(reset,230)}y0=null;drag=false};
+ ov.addEventListener('touchend',end);ov.addEventListener('touchcancel',end);
 }
 swipeClose($('#sheet'),$('#ov'),close);swipeClose($('#libs'),$('#lib'),()=>$('#lib').classList.remove('on'));
 
@@ -389,21 +428,23 @@ function merge(A,B){
  return{plants:out,tomb,ltomb:lt}}
 const state=()=>({plants,tomb:meta.tomb,ltomb:meta.ltomb});
 const ssay=t=>{const s=$('#ss');if(s)s.textContent=t};
+const dot=s=>{const d=$('#sd');d.classList.toggle('on',!!meta.url);d.classList.remove('ok','busy','err');if(s)d.classList.add(s)};
+$('#sd').onclick=()=>{if(!meta.url){toast('Add your sync link in What’s new');return}sync(true).then(()=>toast($('#ss').textContent||'Synced'))};
 const tm=()=>new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
 let syncing=false;
 async function sync(manual){
- if(!meta.url){if(manual)ssay('Paste your Apps Script link first.');return}
- if(syncing)return;syncing=true;ssay('Syncing…');
+ if(!meta.url){dot();if(manual)ssay('Paste your Apps Script link first.');return}
+ if(syncing)return;syncing=true;ssay('Syncing…');dot('busy');
  try{
   for(let n=0;n<3;n++){
    const r=await(await fetch(meta.url+(meta.url.includes('?')?'&':'?')+'app=leafy&t='+Date.now())).json();
    if(!r.ok)throw 0;
    const m=r.data?merge(state(),r.data):state();migrate(m.plants);plants=m.plants;meta.tomb=m.tomb;meta.ltomb=m.ltomb;
    const res=await(await fetch(meta.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({app:'leafy',op:'put',rev:r.rev,data:state()})})).json();
-   if(res.ok){meta.rev=res.rev;meta.last=Date.now();saveLocal();render();ssay('Synced '+tm());syncing=false;return}
+   if(res.ok){meta.rev=res.rev;meta.last=Date.now();saveLocal();render();ssay('Synced '+tm());dot('ok');syncing=false;return}
   }
-  ssay('Busy, try again in a moment.')
- }catch(e){ssay('Couldn’t reach the sheet. Will retry later.')}
+  ssay('Busy, try again in a moment.');dot('err')
+ }catch(e){ssay('Couldn’t reach the sheet. Will retry later.');dot('err')}
  syncing=false}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync(false)});
 
@@ -411,7 +452,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync(false
 $('#bk').onclick=()=>{const b=new Blob([JSON.stringify({app:'leafy',exported:new Date().toISOString(),...state()},null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='leafy-backup-'+today()+'.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);ssay('Backup saved.')};
 $('#rs').onclick=()=>$('#rf').click();
 $('#rf').onchange=async e=>{const f=e.target.files[0];if(!f)return;
- try{const o=JSON.parse(await f.text());if(!Array.isArray(o.plants))throw 0;if(!confirm('Replace everything in the app with this backup?'))return;
+ try{const o=JSON.parse(await f.text());if(!Array.isArray(o.plants))throw 0;if(!await confirmBox('Restore backup?','This replaces everything in the app with the backup.','Restore',true))return;
   const keep=new Set(o.plants.map(p=>String(p.id)));plants.forEach(p=>{if(!keep.has(String(p.id)))meta.tomb[p.id]=Date.now()});
   migrate(o.plants);o.plants.forEach(p=>p.u=Date.now());plants=o.plants;meta.tomb=mx(meta.tomb,o.tomb||{});meta.ltomb=mx(meta.ltomb,o.ltomb||{});
   commit();render();ssay('Restored '+plants.length+' plants.')}catch(x){ssay('That isn’t a Leafy backup.')}e.target.value=''};
@@ -419,7 +460,7 @@ $('#rf').onchange=async e=>{const f=e.target.files[0];if(!f)return;
 /* ---------- What's new pop-up (hold the version number) ---------- */
 const wn=$('#wn');let ready=false,hold;
 const clr=()=>{try{getSelection().removeAllRanges()}catch(e){}};
-function openWn(){clr();$('#rel').textContent='v3.4.0 · '+new Date(REL+'T00:00:00').toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});$('#surl').value=meta.url||'';ssay(meta.last?'Last synced '+new Date(meta.last).toLocaleString([],{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'');
+function openWn(){clr();$('#rel').textContent='v3.5.0 · '+new Date(REL+'T00:00:00').toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});$('#surl').value=meta.url||'';seaUI();ssay(meta.last?'Last synced '+new Date(meta.last).toLocaleString([],{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'');
  ready=false;wn.classList.add('on','fresh');setTimeout(()=>{wn.classList.remove('fresh');ready=true;clr()},700)}
 document.addEventListener('selectionchange',()=>{if(wn.classList.contains('on')&&!ready)clr()});
 wn.addEventListener('click',e=>{if(ready&&e.target===wn)wn.classList.remove('on')});
@@ -427,6 +468,9 @@ const v=$('#ver');
 v.addEventListener('pointerdown',()=>{hold=setTimeout(openWn,550)});
 ['pointerup','pointerleave','pointercancel'].forEach(e=>v.addEventListener(e,()=>clearTimeout(hold)));
 v.addEventListener('contextmenu',e=>e.preventDefault());
+function seaUI(){$('#sea').checked=meta.sea!==false;$('#hS').classList.toggle('on',meta.hemi!='N');$('#hN').classList.toggle('on',meta.hemi=='N');const s=season(dn(today()));$('#seaTxt').textContent=meta.sea!==false?`Now: ${s} · intervals ×${SEAS[s]}`:'Seasonal adjustment is off.'}
+$('#sea').onchange=()=>{meta.sea=$('#sea').checked;saveLocal();render();seaUI()};
+$('#hS').onclick=()=>{meta.hemi='S';saveLocal();render();seaUI()};$('#hN').onclick=()=>{meta.hemi='N';saveLocal();render();seaUI()};
 $('#ssv').onclick=()=>{meta.url=$('#surl').value.trim();saveLocal();sync(true)};
 $('#snw').onclick=()=>sync(true);
 
@@ -440,7 +484,7 @@ $('#thm').onclick=()=>{const n=isDark()?'light':'dark';document.documentElement.
 
 /* ---------- start ---------- */
 if(migrate(plants))saveLocal();
-paint();render();sync(false);
+paint();render();dot();sync(false);
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>

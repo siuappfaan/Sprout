@@ -1,4 +1,4 @@
-const C='leafy-3.4.0';
+const C='leafy-3.5.0';
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./art/agave.webp','./art/aglaonema.webp','./art/aloe.webp','./art/arrow.webp','./art/barrel.webp','./art/bird.webp','./art/calathea.webp','./art/chinese.webp','./art/dracaena.webp','./art/echeveria.webp','./art/fiddle.webp','./art/ghost.webp','./art/haworthia.webp','./art/monstera.webp','./art/palm.webp','./art/peace.webp','./art/pear.webp','./art/pearls.webp','./art/peperomia.webp','./art/philodendron.webp','./art/pothos.webp','./art/rubber.webp','./art/schefflera.webp','./art/sempervivum.webp','./art/snake.webp','./art/spider.webp','./art/zz.webp'])));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))));self.clients.claim()});
 self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(e.request.method!=='GET'||u.origin!==location.origin)return;
